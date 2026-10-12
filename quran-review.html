@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f2a4a"><title>مراجعة الحفظ</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--h:#0f2a4a;--c:#fff;--t:#1d2a3a;--n:#0f2a4a;--g:#d4a93c;--bg:#f5f2ea;--ok:#2f9e63;--ms:#d9534f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Cairo,Tahoma,sans-serif;color:var(--t);padding-bottom:90px}
+header{background:var(--n);color:#fff;text-align:center;padding:16px 10px;border-bottom:4px solid var(--g)}
+header h1{margin:0;font-size:22px}header p{margin:4px 0 0;font-size:12px;color:var(--g)}
+main{max-width:640px;margin:0 auto;padding:12px}
+.card{background:var(--c);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px #0001}
+.card h2{margin:0 0 8px;font-size:17px;color:var(--h)}
+.q{font-family:'Amiri Quran',serif;font-size:19px;color:var(--h);line-height:2}
+.qb{background:#faf6e8;border-right:4px solid var(--g);border-radius:8px;padding:8px 12px}
+.miss{background:#fdeceb;border-right:4px solid var(--ms);border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:14px}
+small{color:#6b7683;font-size:12px}.meta{font-size:12px;color:#6b7683;margin-top:6px}
+.warn{background:var(--c)4d6;border:1px solid var(--g);border-radius:12px;padding:12px;margin-bottom:12px;font-size:14px;line-height:1.9}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stats div{background:var(--c);border-radius:12px;padding:10px 4px;text-align:center;box-shadow:0 2px 8px #0001}
+.stats b{display:block;font-size:20px;color:var(--h)}.stats span{font-size:11px;color:#6b7683}
+.mon h3{margin:14px 0 6px;font-size:15px;color:var(--h)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.grid u{text-decoration:none;text-align:center;font-size:11px;color:#8a94a0}
+.d{border:1px solid #e3dfd2;background:var(--c);border-radius:8px;padding:4px 0;font:700 14px Cairo,sans-serif;color:var(--t);cursor:pointer;line-height:1.1}
+.d small{display:block;font-size:9px;font-weight:400}
+.d.ok{background:var(--ok);color:#fff;border-color:var(--ok)}.d.ok small{color:#e6fff1}
+.d.ms{background:#fdeceb;border-color:var(--ms);color:var(--ms)}.d.sk{background:#eee;color:#999}
+.d.today{outline:3px solid var(--g)}
+button.b{background:var(--n);color:#fff;border:0;border-radius:10px;padding:9px 14px;font:700 14px Cairo,sans-serif;cursor:pointer;margin:4px 2px}
+button.b.g{background:var(--ok)}button.b.l{background:#e9e5d8;color:var(--h)}
+#fab{position:fixed;left:10px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:5}
+#fab button{width:48px;height:48px;border-radius:50%;border:2px solid var(--g);background:var(--n);font-size:21px;box-shadow:0 3px 10px #0004;cursor:pointer}
+.sheet{display:none;position:fixed;inset:0;background:#0007;z-index:10;align-items:flex-end;justify-content:center}.sheet.show{display:flex}
+.in{background:var(--c);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;border-radius:18px 18px 0 0;padding:16px;position:relative}
+.x{position:absolute;left:10px;top:8px;border:0;background:none;font-size:20px;cursor:pointer}
+.in h3{margin:0 0 8px;color:var(--h)}.in h4{margin:14px 0 6px;color:var(--h);font-size:14px}
+.tabs button{border:1px solid var(--n);background:var(--c);color:var(--h);border-radius:16px;padding:5px 12px;font:13px Cairo;margin:2px;cursor:pointer}.tabs button.on{background:var(--n);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:5px;max-height:240px;overflow-y:auto;touch-action:pan-y;user-select:none;padding:4px}
+.chip{border:1px solid #cfc9b6;border-radius:14px;padding:4px 10px;font:13px Cairo;background:var(--c);cursor:pointer}.chip.on{background:var(--g);border-color:var(--g);color:#000;font-weight:700}
+select,input[type=number],input[type=date],input[type=time],input[type=text]{background:var(--c);color:var(--t);font:14px Cairo;padding:7px;border:1px solid #cfc9b6;border-radius:8px;max-width:100%}
+#sum{margin-top:12px;background:#eef6ef;border-radius:10px;padding:10px;font-size:14px}
+.vb{display:none;background:#e8f1fb;color:#1d4577;text-align:center;padding:10px;font-size:13px;font-weight:700}.v .vb{display:block}
+.v #fab [data-act=set],.v #fab [data-act=share],.v .ed{display:none}
+a{color:var(--h);text-decoration:underline;cursor:pointer}
+header{position:relative}.tb{position:absolute;top:8px;left:8px;display:flex;gap:6px}.tb button{border:1px solid var(--g);background:#ffffff1a;color:#fff;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer}
+.d{position:relative}.d em{position:absolute;top:0;right:1px;font-size:9px;font-style:normal}.d em.e{left:1px;right:auto}
+.hz{background:#eaf6ee;border-right:4px solid var(--ok);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:14px}
+.ft{text-align:center}
+.dua{display:none;position:fixed;inset:0;background:#0f2a4af0;z-index:20;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff}.dua.show{display:flex}
+.dua p{font-family:'Amiri Quran',serif;font-size:26px;line-height:2.1;color:var(--g);margin:10px 0}.dua b{font-size:20px}
+body.dark{--bg:#0b1624;--c:#16273c;--t:#e8eef6;--h:#e9c46a;--n:#1d4373}
+body.dark .qb{background:#1f2f45}body.dark .miss,body.dark .d.ms{background:#3a1f22}body.dark .warn{background:#3a321b;color:#f1e4b5}body.dark #sum,body.dark .hz{background:#16342a}
+body.dark button.b.l{background:#2c4260;color:#fff}body.dark .d,body.dark .chip,body.dark select,body.dark input{border-color:#2c4260}body.dark .d.sk{background:#2a3444}body.dark .vb{background:#17314f;color:#bcd6f5}
+.desk main{max-width:1100px}.desk #cal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.desk .mon h3{margin-top:0}.desk .stats{grid-template-columns:repeat(4,1fr)}.desk .in{max-width:760px}
+.d.rs{opacity:.55}.d em.n{top:auto;bottom:0}
+.toast{display:none;position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:#0f2a4af0;color:#fff;border:1px solid var(--g);border-radius:12px;padding:10px 16px;font-size:14px;z-index:30;max-width:90%;text-align:center}.toast.show{display:block}
+.dua .q{color:#fff;font-size:18px}.dua .ab{font-size:14px;margin:4px 0}.dua small{color:#cdd8e6}
+.pns{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.pn{border:2px solid var(--g);border-radius:12px;padding:10px}.pn h2{font-size:15px}.pns .pn.hz{margin-top:0;border-color:var(--ok)}
+.big{width:100%;margin:8px 0 0!important;padding:12px!important;font-size:16px!important}
+.d.pt{background:#fff4d6;border-color:var(--g)}body.dark .d.pt{background:#3a321b}
+.b.dn{background:#1e7a4a!important;box-shadow:inset 0 0 0 2px var(--g)}
+</style></head><body>
+<header><div class="tb"><button data-act="theme" id="bt" title="ليلي / نهاري">🌙</button><button data-act="mode" id="bm" title="كمبيوتر / هاتف">🖥️</button></div><h1>📖 مراجعة الحفظ</h1><p>خطة مراجعة على مدار السنة</p></header>
+<div class="vb">👀 وضع المشاهدة فقط <span id="vd"></span> — <a data-act="exit">فتح نسختي</a></div>
+<main><section id="today" class="card"></section><div id="alert"></div><section id="stats" class="stats"></section><section id="week" class="card"></section><section class="card"><div class="meta" style="margin:0 0 6px">🚩 بداية الدورة · 🏁 نهاية الدورة</div><div id="cal"></div></section><section class="card ft"><button class="b" data-act="shareapp">📤 مشاركة التطبيق</button><button class="b" data-act="install">📲 تثبيت التطبيق</button><button class="b g" data-act="contact">💬 تواصل مع المنشئ</button><p><button class="b l ed" data-act="reset">🔄 إعادة الضبط</button></p></section></main><div id="toast" class="toast"></div><div id="dua" class="dua" onclick="this.classList.remove('show')"></div>
+<nav id="fab"><button data-act="home" title="الرئيسية">🏠</button><button data-act="today" title="اليوم">📅</button><button data-act="set" title="الإعدادات">⚙️</button><button data-act="share" title="مشاركة للمتابعة">🔗</button></nav>
+<div id="sheet" class="sheet"><div class="in"><button class="x" data-act="close">✕</button><div id="sb"></div></div></div>
+<script>
+const D={"c":[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6],"p":[1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222],"r":[1,33,51,67,82,99,113,131,149,165,184,196,210,226,240,250,260,270,279,290,308,326,345,368,386,406,426,446,464,479,494,505,517,529,551,567,581,593,607,628,641,656,670,681,696,710,720,736,751,766,778,802,825,848,863,884,900,916,930,940,955,985,1001,1019,1042,1071,1096,1110,1125,1143,1161,1182,1201,1221,1236,1254,1269,1281,1295,1310,1328,1346,1357,1375,1390,1417,1435,1454,1479,1497,1514,1534,1557,1581,1603,1626,1649,1673,1697,1712,1726,1742,1760,1778,1803,1852,1902,1931,1952,1976,1991,2012,2030,2052,2079,2099,2128,2157,2172,2191,2215,2239,2272,2309,2349,2403,2431,2459,2484,2512,2534,2566,2596,2614,2633,2655,2674,2709,2748,2792,2812,2826,2844,2856,2876,2908,2933,2984,3043,3113,3160,3186,3215,3241,3264,3281,3303,3328,3341,3366,3386,3410,3440,3463,3491,3514,3534,3551,3564,3584,3593,3616,3630,3652,3675,3701,3733,3765,3810,3871,3933,3991,4022,4066,4090,4111,4134,4154,4174,4199,4227,4243,4265,4285,4299,4323,4349,4382,4431,4485,4511,4531,4555,4578,4601,4613,4626,4657,4706,4759,4810,4855,4902,4980,5054,5091,5105,5118,5137,5157,5178,5192,5218,5230,5242,5272,5324,5394,5448,5495,5552,5610,5673,5759,5830,5885,5949,6024,6091,6155],"n":["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبإ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبإ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"]};
+const $=id=>document.getElementById(id),DAY=864e5,KEY='qr_v1',NM=D.n;
+const SS=[];{let a=1;D.c.forEach(c=>{SS.push(a);a+=c})}
+const UN={qp:['ربع صفحة',0],hp:['نصف صفحة',0],p:['صفحة',0],p2:['صفحتان',0],p3:['3 صفحات',0],p4:['4 صفحات',0],r1:['ربع (ربع حزب)',1],r2:['ربعان (نصف حزب)',2],h:['حزب (4 أرباع)',4],r6:['6 أرباع',6],j:['جزء',8],j15:['جزء ونصف',12],j2:['جزآن',16],j3:['3 أجزاء',24],sur:['سورة',0]};
+const CAND=['qp','hp','p','p2','p3','p4','r1','r2','h','r6','j','j15','j2','j3'],PG={p:1,hp:2,qp:4},PN={p2:2,p3:3,p4:4};
+const DUR=[[7,'أسبوع'],[14,'أسبوعان'],[21,'3 أسابيع'],[28,'4 أسابيع (شهر)'],[60,'شهران'],[90,'3 أشهر']];
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+let S={start:iso(new Date()),sel:{s:[],j:[],h:[],r:[]},unit:'p',mode:'dur',dur:28,amt:1,order:'rev',done:[],skip:[],time:'05:00',hz:{on:0,u:'a5',n:1,s:114,off:[5,6]},hd:[],rest:[],nt:{},use:'rev'},V=false,VT=0,done=new Set(),skip=new Set(),hd=new Set(),DP=null,curTab='s';
+const bs=(a,x)=>{let l=0,h=a.length-1;while(l<h){const m=(l+h+1)>>1;a[m]<=x?l=m:h=m-1}return l};
+const pageOf=a=>bs(D.p,a)+1,rEnd=r=>r<240?D.r[r]-1:6236,pEnd=p=>p<604?D.p[p]-1:6236;
+const sd=()=>{const[y,m,d]=S.start.split('-').map(Number);return Date.UTC(y,m-1,d)};
+const tIdx=()=>{const n=new Date();return Math.round((Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())-sd())/DAY)};
+const DN=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const dow=i=>new Date(sd()+i*DAY).getUTCDay();
+let AI=[];function calcAI(){AI=[];let c=0;for(let i=0;i<365;i++)AI.push(S.rest.includes(dow(i))?-1:c++)}
+const rest=i=>AI[i]<0;
+const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function streak(t){let n=0;for(let i=t;i>=0;i--){if(rest(i))continue;if(full(i))n++;else if(i<t)break}return n}
+function cheer(t){const s=streak(t),m=[],P=plan(),a=AI[t];if([7,30,60,100,200,365].includes(s))m.push(`⭐ ${s} يومًا متتاليًا!`);
+ if(P.Dc&&a>=0&&a%P.Dc===P.Dc-1){let ok=1;for(let i=0;i<=t;i++)if(AI[i]>=a-P.Dc+1&&!done.has(i)&&!skip.has(i))ok=0;if(ok)m.push('🏁 أتممت دورة مراجعة كاملة!')}return m.join(' · ')}
+const noteView=i=>S.nt[i]?`<div class="miss" style="background:#eef3fb;border-color:#5b8def;margin-top:10px">📝 ${esc(S.nt[i])}</div>`:'';
+const noteEdit=i=>V?noteView(i):`<textarea id="nt" rows="2" style="width:100%;margin-top:10px;background:var(--c);color:var(--t)" placeholder="📝 ملاحظة الشيخ أو ولي الأمر لهذا اليوم">${esc(S.nt[i]||'')}</textarea><button class="b l" data-act="note" data-i="${i}">حفظ الملاحظة</button>`;
+function load(){const h=location.hash;
+ if(h.startsWith('#v=')){try{const q=new URLSearchParams(h.slice(1));let b=q.get('v').replace(/-/g,'+').replace(/_/g,'/');b+='='.repeat((4-b.length%4)%4);Object.assign(S,JSON.parse(atob(b)));V=true;VT=+q.get('t')||0}catch(e){}}
+ if(!V){try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}}
+ S.hz=Object.assign({on:0,u:'a5',n:1,s:114,off:[5,6]},S.hz);S.use=S.use||(S.hz.on?'both':'rev');S.rest=S.rest||[];S.nt=(S.nt&&typeof S.nt==='object')?S.nt:{};done=new Set(S.done);skip=new Set(S.skip);hd=new Set(S.hd||[])}
+function save(){S.done=[...done];S.skip=[...skip];S.hd=[...hd];if(!V){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}}
+// ---- الخطة ----
+function build(u){const m=new Uint8Array(6238),f=(a,b)=>{for(let i=a;i<=b;i++)m[i]=1},R=new Set(S.sel.r);
+ S.sel.j.forEach(j=>{for(let r=(j-1)*8+1;r<=j*8;r++)R.add(r)});S.sel.h.forEach(h=>{for(let r=(h-1)*4+1;r<=h*4;r++)R.add(r)});
+ R.forEach(r=>f(D.r[r-1],rEnd(r)));S.sel.s.forEach(n=>f(SS[n-1],SS[n-1]+D.c[n-1]-1));
+ const any=(a,b)=>{for(let i=a;i<=b;i++)if(m[i])return 1;return 0};let it=[];
+ if(PG[u]){const k=PG[u];for(let p=1;p<=604;p++){const a0=D.p[p-1],L=pEnd(p)-a0+1;for(let j=0;j<k;j++){const a=a0+Math.floor(j*L/k),b=a0+Math.floor((j+1)*L/k)-1;if(b>=a&&any(a,b))it.push({a,b})}}}
+ else if(PN[u]){const k=PN[u];let run=[];const fl=()=>{for(let i=0;i<run.length;i+=k){const g=run.slice(i,i+k);it.push({a:D.p[g[0]-1],b:pEnd(g[g.length-1])})}run=[]};for(let p=1;p<=604;p++){any(D.p[p-1],pEnd(p))?run.push(p):fl()}fl()}
+ else if(u==='sur'){for(let q=0;q<114;q++){let lo=0,hi=0;for(let i=SS[q];i<SS[q]+D.c[q];i++)if(m[i]){lo=lo||i;hi=i}if(lo)it.push({a:lo,b:hi})}}
+ else{const k=UN[u][1];let run=[];const fl=()=>{for(let i=0;i<run.length;i+=k){const g=run.slice(i,i+k);it.push({a:D.r[g[0]-1],b:rEnd(g[g.length-1])})}run=[]};
+  for(let r=1;r<=240;r++){any(D.r[r-1],rEnd(r))?run.push(r):fl()}fl()}
+ if(S.order==='rev')it.reverse();return it}
+function plan(){const it=build(S.unit);return{it,N:it.length,Dc:it.length}}
+function opts(){const r=CAND.map(u=>[u,build(u).length]).filter(x=>x[1]>0),d=S.dur;
+ return{lo:r.filter(x=>x[1]<=d).sort((a,b)=>b[1]-a[1])[0],hi:r.filter(x=>x[1]>d).sort((a,b)=>a[1]-b[1])[0]}}
+function autoUnit(f){const o=opts(),c=[o.lo,o.hi].filter(Boolean);if(!c.length)return;if(f||!c.some(x=>x[0]===S.unit))S.unit=c.sort((a,b)=>Math.abs(a[1]-S.dur)-Math.abs(b[1]-S.dur))[0][0]}
+function rmax(){if(S.mode!=='dur')return 6;const A=plan().N,d=S.dur;return!A||A>d?0:Math.min(5,Math.floor((d-A)/(d/7)))}
+function trimRest(){const m=rmax();if(S.rest.length>m)S.rest=S.rest.slice(0,m)}
+function fix(f){if(S.mode==='dur')autoUnit(f);trimRest()}
+const cycLen=(A,r)=>A?A+Math.ceil(A/(7-r))*r:0;
+function dayItems(P,i){const a=AI[i];if(!P.Dc||a<0)return[];const c=a%P.Dc;return P.it.slice(Math.floor(c*P.N/P.Dc),Math.floor((c+1)*P.N/P.Dc))}
+const sa=a=>{const s=bs(SS,a);return[s,a-SS[s]+1]};
+function lab(a,b){const[s1,n1]=sa(a),[s2,n2]=sa(b),p1=pageOf(a),p2=pageOf(b);
+ return`<span class="q">${s1===s2?`سورة ${NM[s1]}: ${n1}–${n2}`:`${NM[s1]} ${n1} ← ${NM[s2]} ${n2}`}</span> <small>ص ${p1===p2?p1:p1+'–'+p2}</small>`}
+function lines(list){const s=[...list].sort((x,y)=>x.a-y.a),o=[];s.forEach(x=>{const l=o[o.length-1];l&&l.b+1===x.a?l.b=x.b:o.push({a:x.a,b:x.b})});
+ if(S.order==='rev')o.reverse();return o.map(x=>lab(x.a,x.b)).join('<br>')||'—'}
+const missed=t=>{const r=[];for(let i=0;i<t&&i<365;i++)if(!done.has(i)&&!skip.has(i)&&!rest(i))r.push(i);return r};
+// ---- العرض ----
+const HZU=[['ay','آية'],['a3','3 آيات'],['a5','5 آيات'],['qp','ربع صفحة'],['hp','نصف صفحة'],['p','صفحة'],['r1','ربع (ربع حزب)'],['r2','ربعان'],['h','حزب']];
+function hzUnits(u){const o=[],rev=S.order==='rev',sp=(a,b,k)=>{const L=b-a+1;for(let j=0;j<k;j++){const x=a+Math.floor(j*L/k),y=a+Math.floor((j+1)*L/k)-1;if(y>=x)o.push([x,y])}};
+ if(['ay','a3','a5'].includes(u)){const k=u==='ay'?1:u==='a3'?3:5;for(let q=0;q<114;q++){const a0=SS[q],b0=a0+D.c[q]-1,g=[];
+  if(rev){for(let e=b0;e>=a0;e-=k)g.push([Math.max(a0,e-k+1),e]);g.reverse()}else{for(let a=a0;a<=b0;a+=k)g.push([a,Math.min(b0,a+k-1)])}g.forEach(x=>o.push(x))}}
+ else if(['qp','hp','p'].includes(u))for(let p=1;p<=604;p++)sp(D.p[p-1],pEnd(p),u==='p'?1:u==='hp'?2:4);
+ else{const k={r1:1,r2:2,h:4}[u];for(let r=1;r<=240;r+=k)o.push([D.r[r-1],rEnd(Math.min(r+k-1,240))])}return o}
+function hzAt(U,r){const z=S.hz,q=z.s-1,rev=S.order==='rev',a0=SS[q],b0=SS[q]+D.c[q]-1;
+ const idx=rev?bs(U.map(x=>x[0]),b0):Math.max(0,U.findIndex(x=>x[1]>=a0)),k=r*z.n;
+ return(rev?U.slice(Math.max(0,idx-k-z.n+1),Math.max(0,idx-k+1)):U.slice(idx+k,idx+k+z.n)).map(x=>({a:x[0],b:x[1]}))}
+const rank=t=>[...hd].filter(x=>x<t).length;
+function hzBlock(t){const z=S.hz,U=hzUnits(z.u),un=HZU.find(x=>x[0]===z.u)[1];
+ if(z.off.includes(dow(t))){const g=[...hd].filter(j=>j>=t-7&&j<t).flatMap(j=>hzAt(U,rank(j)));
+  return`<div class="pn hz"><b>🔁 يوم مراجعة الحفظ الجديد</b> <small>(لا حفظ جديد اليوم)</small><div>${g.length?lines(g):'لا حفظ جديد خلال آخر ٧ أيام'}</div></div>`}
+ const g=hzAt(U,rank(t));return`<div class="pn hz"><b>📗 حفظ اليوم${hd.has(t)?' ✅':''}</b> <small>(${un})</small><div>${g.length?lines(g):'🎉 أتممت المصحف'}</div><button class="ed b g big${hd.has(t)?' dn':''}" data-act="hmark">✅ تم الحفظ</button></div>`}
+const DU=[['خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ','رواه البخاري'],['اقْرَؤُوا الْقُرْآنَ فَإِنَّهُ يَأْتِي يَوْمَ الْقِيَامَةِ شَفِيعًا لِأَصْحَابِهِ','رواه مسلم'],['يُقَالُ لِصَاحِبِ الْقُرْآنِ: اقْرَأْ وَارْتَقِ وَرَتِّلْ كَمَا كُنْتَ تُرَتِّلُ فِي الدُّنْيَا، فَإِنَّ مَنْزِلَتَكَ عِنْدَ آخِرِ آيَةٍ تَقْرَؤُهَا','رواه أبو داود والترمذي'],['مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ، وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا','رواه الترمذي'],['الْمَاهِرُ بِالْقُرْآنِ مَعَ السَّفَرَةِ الْكِرَامِ الْبَرَرَةِ','متفق عليه'],['اللَّهُمَّ اجْعَلِ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي','دعاء مأثور، رواه أحمد']];
+function dua(t,b,m){const x=DU[Math.floor(Math.random()*DU.length)],e=$('dua');
+ e.innerHTML=`<div><b>تقبّل الله منك ✨</b><div style="font-size:19px;margin:8px 0">${t}</div>${b?`<div class="ab">${b}</div>`:''}${m?`<div style="color:#d4a93c;margin:6px 0">${m}</div>`:''}<p>${x[0]}</p><small>${x[1]}</small></div>`;
+ e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000)}
+function renderToday(P,t){const el=$('today');
+ if(!P.N)return el.innerHTML='<h2>ابدأ بتحديد محفوظك</h2><p>اضغط ⚙️ لاختيار ما تحفظه وإعداد الخطة.</p>'+(S.hz.on&&t>=0&&t<365?hzBlock(t):'');
+ if(t<0)return el.innerHTML=`<h2>تبدأ الخطة بعد ${-t} يوم</h2>`;
+ if(t>=365)return el.innerHTML='<h2>انتهت سنة الخطة 🎉</h2><p>غيّر تاريخ البداية من ⚙️ لبدء سنة جديدة.</p>';
+ const ms=missed(t),ti=dayItems(P,t);
+ el.innerHTML=`<div class="pns"><div class="pn"><h2>📖 مراجعة اليوم ${done.has(t)?'✅':''}</h2>`+(ms.length?`<div class="miss"><b>فائت (${ms.length} يوم):</b><br>${lines(ms.flatMap(i=>dayItems(P,i)))}<br><a class="ed" data-act="skipm">تجاهل الفائت</a></div>`:'')+`<div class="qb">${rest(t)?'🌿 اليوم راحة من المراجعة':lines(ti)}</div><div class="meta">${rest(t)?'':ti.length+' من '+P.N+' ('+UN[S.unit][0]+') · '}الدورة ${P.Dc} يوم</div>${rest(t)?'':`<button class="ed b g big${done.has(t)?' dn':''}" data-act="mark">✅ تم المراجعة</button>`}</div>`+(S.hz.on?hzBlock(t):'')+`</div>`+noteView(t)}
+let NN=0;
+function full(i){const R=!rest(i)&&NN>0,H=S.hz.on&&!S.hz.off.includes(dow(i));return!!((R||H)&&(!R||done.has(i))&&(!H||hd.has(i)))}
+function finish(i,w){const P=plan(),R=!rest(i)&&P.N>0,H=S.hz.on&&!S.hz.off.includes(dow(i));
+ if(!full(i)){render();toast(w==='r'?'✅ تم المراجعة — بقي الحفظ':'📗 تم الحفظ — بقيت المراجعة');return}
+ const t=R&&H?'✅ أتممت مراجعة اليوم 📗 وحفظه':R?'✅ أتممت مراجعة اليوم':'📗 أتممت حفظ اليوم',b=(R?lines(dayItems(P,i)):'')+(R&&H?'<br>':'')+(H?lines(hzAt(hzUnits(S.hz.u),rank(i))):'');
+ dua(t,b,cheer(i));setTimeout(()=>{render();const c=$('d'+i);c&&c.scrollIntoView({behavior:'smooth',block:'center'})},2100)}
+function renderAlert(){$('alert').innerHTML=''}
+function renderStats(P,t){const dn=done.size,ms=P.N&&t>0?missed(t).length:0;const st=streak(t);
+ let tot=0;done.forEach(d=>tot+=dayItems(P,d).length);const due=t<0?0:[...Array(Math.min(t,364)+1).keys()].filter(i=>!rest(i)&&!skip.has(i)).length;
+ $('stats').innerHTML=[[dn,'✅ أيام منجزة'],[ms,'❌ أيام فائتة'],[st,'⭐ متتالية'],[due>0?Math.round(100*dn/due)+'%':'—','📊 الالتزام'],[P.N?Math.floor(tot/P.N):0,'📖 دورات مكتملة'],[P.Dc||'—','⏱ أيام الدورة']].concat(S.hz.on?[[hd.size,'📗 أيام الحفظ']]:[]).map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}
+function renderCal(P,t){const fm=new Intl.DateTimeFormat('ar',{month:'long',year:'numeric',timeZone:'UTC'}),fh=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{month:'long',year:'numeric',timeZone:'UTC'}),fd=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn',{day:'numeric',timeZone:'UTC'});
+ let h='',cur=-1;for(let i=0;i<365;i++){const d=new Date(sd()+i*DAY),k=d.getUTCFullYear()*12+d.getUTCMonth();
+  if(k!==cur){if(cur>=0)h+='</div></section>';cur=k;h+=`<section class="mon"><h3>${fm.format(d)} <small>${fh.format(d)}</small></h3><div class="grid"><u>سبت</u><u>أحد</u><u>اثنين</u><u>ثلاثاء</u><u>أربعاء</u><u>خميس</u><u>جمعة</u>`+'<i></i>'.repeat((d.getUTCDay()+1)%7)}
+  const c=(i===t?'today ':'')+(rest(i)?'rs ':'')+(full(i)?'ok':done.has(i)||hd.has(i)?'pt':skip.has(i)?'sk':i<t&&!rest(i)?'ms':'');
+  const a=AI[i],cs=P.Dc&&a>=0&&a%P.Dc===0,ce=P.Dc&&a>=0&&a%P.Dc===P.Dc-1;
+  h+=`<button class="d ${c}" id="d${i}" data-i="${i}"${P.Dc&&a>=0?` title="دورة ${Math.floor(a/P.Dc)+1}"`:''}>${cs?'<em>🚩</em>':''}${ce?'<em class="e">🏁</em>':''}${S.nt[i]?'<em class="n">📝</em>':''}${d.getUTCDate()}<small>${fd.format(d)}</small></button>`}
+ $('cal').innerHTML=h+'</div></section>'}
+function renderWeek(P,t){const e=$('week');if(t<0||t>364||(!P.N&&!S.hz.on)){e.style.display='none';return}e.style.display='';
+ let dd=0,du=0,u=0,hn=0;for(let i=Math.max(0,t-6);i<=t;i++){if(hd.has(i))hn++;if(rest(i))continue;du++;if(done.has(i)){dd++;u+=dayItems(P,i).length}}
+ e.innerHTML=`<h2>📅 ملخص آخر ٧ أيام</h2><div>${P.N?`✅ مراجعة: <b>${dd}</b> من ${du} يوم · ${u} ${UN[S.unit][0]}`:''}${S.hz.on?`<br>📗 حفظ جديد: <b>${hn}</b> يوم (${HZU.find(x=>x[0]===S.hz.u)[1]} يوميًا)`:''}</div>${advice(P,t)}`}
+function advice(P,t){let rm=0,hm=0;for(let i=Math.max(0,t-7);i<t;i++){if(!rest(i)&&P.N&&!done.has(i)&&!skip.has(i))rm++;if(S.hz.on&&!S.hz.off.includes(dow(i))&&!hd.has(i))hm++}
+ if(rm<3&&hm<3)return'';const a=rm>=3,b=hm>=3;
+ return`<div class="warn" style="margin:10px 0 0">⚠️ لاحظنا عدم انتظام ${a&&b?'في المراجعة والحفظ':a?'في المراجعة':'في الحفظ'} خلال الأسبوع الماضي، فنوصي بـ<b>خطة أخف</b>: ${a?'زِد مدة دورة المراجعة أو صغّر وحدتها':''}${a&&b?'، و':''}${b?'قلّل كمية الحفظ اليومي (مثل 3 آيات)':''}.<br><b>«قليلٌ دائمٌ خيرٌ من كثيرٍ منقطع»</b> <small>(قول مأثور) — وفي الحديث: «أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ» (متفق عليه)</small>${V?'':'<br><button class="b" data-act="set">تعديل الخطة</button>'}</div>`}
+function render(){calcAI();const P=plan(),t=tIdx();NN=P.N;renderToday(P,t);renderAlert(P,t);renderStats(P,t);renderWeek(P,t);renderCal(P,t)}
+function sheet(h){$('sb').innerHTML=h;$('sheet').classList.add('show')}
+function openDay(i){const P=plan(),d=new Date(sd()+i*DAY),f=(l,o)=>new Intl.DateTimeFormat(l,Object.assign({timeZone:'UTC'},o)).format(d);
+ sheet(`<h3>${f('ar',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</h3><small>${f('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'})}</small><div class="qb" style="margin-top:10px">${rest(i)?'🌿 يوم راحة':lines(dayItems(P,i))}</div>${noteEdit(i)}`+
+ (V?'':(rest(i)?'':`<button class="b ${done.has(i)?'l':'g'}" data-act="tog" data-i="${i}">${done.has(i)?'↩️ إلغاء المراجعة':'✅ تم المراجعة'}</button>`)+(S.hz.on&&!S.hz.off.includes(dow(i))?`<button class="b ${hd.has(i)?'l':'g'}" data-act="htog" data-i="${i}">${hd.has(i)?'↩️ إلغاء الحفظ':'📗 تم الحفظ'}</button>`:'')))}
+// ---- الإعدادات ----
+function chips(k){const N={s:114,j:30,h:60,r:240}[k],L={s:n=>n+'. '+NM[n-1],j:n=>'الجزء '+n,h:n=>'الحزب '+n,r:n=>'ربع '+n}[k],on=new Set(S.sel[k]);let o='';
+ for(let i=0;i<N;i++){const n=S.order==='rev'?N-i:i+1;o+=`<span class="chip${on.has(n)?' on':''}" data-k="${k}" data-n="${n}">${L(n)}</span>`}return o}
+const sel=(o,v)=>o.map(x=>`<option value="${x[0]}"${x[0]==v?' selected':''}>${x[1]}</option>`).join('');
+const days=k=>DN.map((n,i)=>`<label style="margin-inline-end:8px;white-space:nowrap"><input type="checkbox" ${(k==='off'?S.hz.off:S.rest).includes(i)?'checked':''} onchange="setDay('${k}',${i},this.checked)"> ${n}</label>`).join('');
+let tt;function toast(m,ms){const e=$('toast');e.textContent=m;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),ms||2000)}
+function restMsg(){const m=rmax();return m?`متاح ${m==1?'يوم':m==2?'يومان':m+' أيام'} راحة كل أسبوع`:'لا أيام راحة متاحة مع هذه المدة — زد مدة المراجعة لإيجاد أيام راحة'}
+function pickUnit(u){S.unit=u;trimRest();save();render();refreshMode();toast(restMsg())}
+function setUse(v){S.use=v;S.hz.on=v==='both'?1:0;save();render();openSet()}
+function modeHtml(){const m=S.mode==='dur';let h=`<label><input type="radio" name="m" ${m?'checked':''} onchange="setv('mode','dur')"> أحدد مدة الدورة (والتطبيق يقترح الكمية)</label><br><label><input type="radio" name="m" ${m?'':'checked'} onchange="setv('mode','amt')"> أحدد كمية المراجعة (والتطبيق يحسب المدة)</label><br>`;
+ if(m){const o=opts(),rm=n=>n<=S.dur?Math.min(5,Math.floor((S.dur-n)/(S.dur/7))):0,
+  card=(x,t)=>x?`<label style="display:block;margin:6px 0;padding:6px;border:1px solid #cfc9b6;border-radius:8px"><input type="radio" name="o" ${S.unit===x[0]?'checked':''} onchange="pickUnit('${x[0]}')"> ${t}: <b>${UN[x[0]][0]}</b> يوميًا ← ${x[1]} يوم · ${rm(x[1])?`يسمح بـ ${rm(x[1])} راحة أسبوعيًا`:'بلا أيام راحة'}</label>`:'';
+  h+=`<select onchange="setv('dur',+this.value)">${sel(DUR,S.dur)}</select>`+(o.lo||o.hi?card(o.lo,'⬇ الأقرب الأقل من مدتك')+card(o.hi,'⬆ الأقرب الأكثر من مدتك'):'<br><small>حدد المحفوظ أولًا</small>')}
+ else h+=`<select onchange="setv('unit',this.value)">${sel(Object.entries(UN).map(([k,v])=>[k,v[0]]),S.unit)}</select> يوميًا`;
+ return h+`<br><small>أيام راحة من المراجعة (لا تُحسب فائتة):</small><br>${days('rest')}`}
+function refreshMode(){const e=$('mode');if(e){e.innerHTML=modeHtml();sum()}}
+function openSet(tab){curTab=tab||curTab;const st=$('sb').parentNode.scrollTop,both=S.use==='both';
+ sheet(`<h3>⚙️ الإعدادات</h3>
+ <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="b ${both?'l':''}" onclick="setUse('rev')">📖 للمراجعة فقط (يوصى)</button><button class="b ${both?'':'l'}" onclick="setUse('both')">📖 + 📗 للمراجعة والحفظ الجديد</button></div>
+ <h4>١) ما تحفظه <small>(اضغط أو مرّر إصبعك أفقيًا فوق العناصر)</small></h4>
+ <div class="tabs">${[['s','السور'],['j','الأجزاء'],['h','الأحزاب'],['r','الأرباع']].map(x=>`<button class="${x[0]==curTab?'on':''}" data-act="tab" data-t="${x[0]}">${x[1]}</button>`).join('')}</div>
+ <div class="chips" id="chips">${chips(curTab)}</div>
+ <label><input type="checkbox" ${S.order==='rev'?'checked':''} onchange="setv('order',this.checked?'rev':'fwd');openSet()"> الترتيب من النهاية للبداية (مناسب للأطفال)</label> <a data-act="clr">مسح كل التحديد</a>
+ <h4>٢) إعدادات المراجعة</h4><div id="mode">${modeHtml()}</div><div id="sum"></div>
+ ${both?`<h4>٣) إعدادات الحفظ الجديد</h4><select onchange="setz('u',this.value)">${sel(HZU,S.hz.u)}</select> يوميًا<br>
+ <small>ابدأ من سورة:</small> <select onchange="setz('s',+this.value)">${sel(NM.map((x,i)=>[i+1,(i+1)+'. '+x]),S.hz.s)}</select><br>
+ <small>الاتجاه يتبع ترتيب المراجعة. المحفوظ الجديد لا يدخل خطة المراجعة تلقائيًا؛ أضفه من التحديد عند الحاجة.</small><br>
+ <small>أيام بلا حفظ جديد (من 2 إلى 4) لمراجعة الحفظ الجديد:</small><br>${days('off')}`:''}
+ <h4>${both?'٤':'٣'}) تاريخ بداية الخطة</h4><input type="date" value="${S.start}" onchange="setStart(this.value)"><div id="dts" class="meta" style="line-height:1.9"></div>
+ <h4>${both?'٥':'٤'}) تذكير يومي</h4><input type="time" value="${S.time}" onchange="setv('time',this.value)"> <button class="b" data-act="ics">📲 أضف التذكير لتقويم الهاتف</button>
+ <p><button class="b l" data-act="reset">🔄 إعادة الضبط</button> <button class="b g" data-act="savebtn">💾 حفظ</button></p>`);$('sb').parentNode.scrollTop=st;sum()}
+function dates(P){const e=$('dts');if(!e)return;calcAI();const f=i=>new Intl.DateTimeFormat('ar',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(sd()+i*DAY));
+ let c=-1;if(P.N)for(let i=0;i<365;i++)if(AI[i]===P.N-1){c=i;break}
+ e.innerHTML=`📅 تبدأ الخطة: <b>${f(0)}</b>${c>=0?`<br>🏁 تنتهي الدورة الأولى: <b>${f(c)}</b>`:''}<br>🗓️ تنتهي الخطة (سنة كاملة): <b>${f(364)}</b>`}
+function sum(){const P=plan(),e=$('sum');dates(P);if(!e)return;const r=S.rest.length;
+ e.innerHTML=P.N?`✅ ${UN[S.unit][0]} يوميًا · <b>${P.N}</b> يوم مراجعة${r?` + ${r} راحة أسبوعيًا`:''} ← تكتمل الدورة في ≈ <b>${cycLen(P.N,r)}</b> يومًا`:'لم تحدد محفوظك بعد'}
+function setDay(k,i,on){const A=new Set(k==='off'?S.hz.off:S.rest);on?A.add(i):A.delete(i);const a=[...A];
+ if(k==='off'){if(a.length<2||a.length>4){toast('اختر من يومين إلى 4 أيام');return openSet()}S.hz.off=a}
+ else{const m=rmax();if(a.length>m){toast(m?`المتاح ${m} أيام راحة أسبوعيًا فقط بحسب مدة المراجعة التي اخترتها؛ زد المدة لأيام راحة أكثر`:restMsg(),2500);return refreshMode()}S.rest=a}
+ save();render();refreshMode()}
+function setz(k,v){S.hz[k]=v;save();render()}
+function setv(k,v){S[k]=v;fix(k==='dur');save();render();if(['dur','mode','unit'].includes(k)){refreshMode();if(S.mode==='dur'&&k!=='unit')toast(restMsg())}else sum()}
+function setStart(v){if(!v)return;if(done.size&&!confirm('تغيير تاريخ البداية يصفّر سجل الإنجاز. متابعة؟'))return openSet();done.clear();skip.clear();hd.clear();S.nt={};setv('start',v)}
+// تحديد بالتمرير
+let drag=null;const chipOf=(x,y)=>{const e=document.elementFromPoint(x,y);return e&&e.closest&&e.closest('.chip')};
+function paint(c,on){if(c.classList.contains('on')===on)return;c.classList.toggle('on',on);const k=c.dataset.k,n=+c.dataset.n,A=new Set(S.sel[k]);on?A.add(n):A.delete(n);S.sel[k]=[...A]}
+document.addEventListener('pointerdown',e=>{const c=e.target.closest('.chip');if(!c)return;drag={on:!c.classList.contains('on')};paint(c,drag.on)});
+document.addEventListener('pointermove',e=>{if(!drag)return;const c=chipOf(e.clientX,e.clientY);c&&paint(c,drag.on)});
+const endDrag=()=>{if(drag){drag=null;fix();save();render();refreshMode()}};document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
+// ---- أوامر ----
+function shareLink(){return location.href.split('#')[0]+'#v='+btoa(JSON.stringify(S)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')+'&t='+Date.now()}
+function ics(){const[h,m]=S.time.split(':'),n=new Date(),z=n.toISOString().replace(/[-:]|\.\d{3}/g,'');
+ const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//QuranReview//AR','BEGIN:VEVENT','UID:qr-'+Date.now()+'@review','DTSTAMP:'+z,`DTSTART:${n.getFullYear()}${pad(n.getMonth()+1)}${pad(n.getDate())}T${h}${m}00`,'RRULE:FREQ=DAILY;COUNT=365','SUMMARY:📖 مراجعة الحفظ','BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:وقت مراجعة الحفظ','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/calendar'}));a.download='مراجعة-الحفظ.ics';a.click()}
+const ACT={close(){$('sheet').classList.remove('show')},
+ today(){const e=$('d'+Math.min(Math.max(tIdx(),0),364));e&&e.scrollIntoView({behavior:'smooth',block:'center'})},
+ mark(){const t=tIdx();if(t<0||t>364||!plan().N||rest(t))return;if(done.has(t))return;missed(t).forEach(i=>done.add(i));done.add(t);save();finish(t,'r')},
+ hmark(){const t=tIdx();if(t<0||t>364||S.hz.off.includes(dow(t)))return;if(hd.has(t))return;hd.add(t);save();finish(t,'h')},
+ skipm(){missed(tIdx()).forEach(i=>skip.add(i));save();render()},
+ tog(a){const i=+a.dataset.i;ACT.close();if(done.has(i)){done.delete(i);save();render();return}done.add(i);skip.delete(i);save();finish(i,'r')},
+ htog(a){const i=+a.dataset.i;ACT.close();if(hd.has(i)){hd.delete(i);save();render();return}hd.add(i);save();finish(i,'h')},
+ savebtn(){save();ACT.close();toast('✅ تم حفظ الإعدادات')},
+ set(){openSet()},tab(a){openSet(a.dataset.t)},clr(){S.sel={s:[],j:[],h:[],r:[]};save();render();openSet()},ics,
+ share(){sheet(`<h3>🔗 رابط المتابعة (مشاهدة فقط)</h3><input type="text" id="sl" readonly style="width:100%" value="${shareLink()}" onclick="this.select()"><p><small>لولي الأمر أو الشيخ: يرى الخطة والإنجاز ولا يستطيع التعديل. هذه صورة لحالتك الآن، فأعد إرسال الرابط بعد أي تحديث.</small></p><button class="b" data-act="copy">📋 نسخ</button><button class="b g" data-act="wa">واتساب</button>`)},
+ copy(){const i=$('sl');i.select();navigator.clipboard?navigator.clipboard.writeText(i.value):document.execCommand('copy')},
+ wa(){window.open('https://wa.me/?text='+encodeURIComponent('📖 متابعة مراجعة الحفظ (مشاهدة فقط):\n'+$('sl').value),'_blank')},
+ home(){ACT.close();scrollTo({top:0,behavior:'smooth'})},
+ reset(){if(confirm('سيتم مسح كل بيانات التطبيق وإعادة الضبط. متابعة؟')){try{localStorage.removeItem(KEY)}catch(e){}location.href=location.href.split('#')[0]}},
+ note(a){const i=+a.dataset.i,v=$('nt').value.trim();v?S.nt[i]=v:delete S.nt[i];save();render();ACT.close()},
+ exit(){location.href=location.href.split('#')[0]},
+ theme(){const d=!document.body.classList.contains('dark');try{localStorage.setItem('qr_theme',d?'dark':'light')}catch(e){}ui()},
+ mode(){const d=!document.body.classList.contains('desk');try{localStorage.setItem('qr_mode',d?'desk':'phone')}catch(e){}ui()},
+ shareapp(){const u=location.href.split('#')[0],t='📖 تطبيق مراجعة وحفظ القرآن';navigator.share?navigator.share({title:t,url:u}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(t+'\n'+u),'_blank')},
+ install(){DP?(DP.prompt(),DP=null):sheet('<h3>📲 تثبيت التطبيق</h3><p>أندرويد (كروم): القائمة ⋮ ثم «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».<br>آيفون (سفاري): زر المشاركة ⬆️ ثم «إضافة إلى الشاشة الرئيسية».<br>الكمبيوتر (كروم/إيدج): أيقونة التثبيت في شريط العنوان.</p><small>يعمل التثبيت الكامل عندما يكون التطبيق مستضافًا على رابط https.</small>')},
+ contact(){window.open('https://wa.me/97477107247?text='+encodeURIComponent('السلام عليكم أ. عزت، بخصوص تطبيق مراجعة الحفظ:'),'_blank')}};
+const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+function ui(){const th=lsg('qr_theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),md=lsg('qr_mode')||(innerWidth>=900?'desk':'phone');
+ document.body.classList.toggle('dark',th==='dark');document.body.classList.toggle('desk',md==='desk');$('bt').textContent=th==='dark'?'☀️':'🌙';$('bm').textContent=md==='desk'?'📱':'🖥️'}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e});
+try{const l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(new Blob([JSON.stringify({name:'مراجعة الحفظ',short_name:'مراجعة الحفظ',start_url:location.href.split('#')[0],display:'standalone',dir:'rtl',lang:'ar',background_color:'#0f2a4a',theme_color:'#0f2a4a',icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f2a4a'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E",sizes:'any',type:'image/svg+xml'}]})],{type:'application/manifest+json'}));document.head.appendChild(l)}catch(e){}
+document.addEventListener('click',e=>{const d=e.target.closest('.d');if(d)return openDay(+d.dataset.i);const a=e.target.closest('[data-act]');a&&ACT[a.dataset.act]&&ACT[a.dataset.act](a)});
+window.addEventListener('hashchange',()=>location.reload());
+function init(){load();ui();if(!V){fix();save()}document.body.classList.toggle('v',V);if(V&&VT)$('vd').textContent='(آخر تحديث: '+new Date(VT).toLocaleString('ar',{dateStyle:'medium',timeStyle:'short'})+')';
+ render();if(!V&&!plan().N)openSet();else setTimeout(()=>{},0)}
+init();
+</script></body></html>
