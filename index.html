@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261014-061205"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
+<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261014-112930"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--h:#0f2a4a;--c:#fff;--t:#1d2a3a;--n:#0f2a4a;--g:#d4a93c;--bg:#f5f2ea;--ok:#2f9e63;--ms:#d9534f}
@@ -43,7 +43,7 @@ select,input[type=number],input[type=date],input[type=time],input[type=text]{bac
 .vb{display:none;background:#e8f1fb;color:#1d4577;text-align:center;padding:10px;font-size:13px;font-weight:700}.v .vb{display:block}
 .v #fab [data-act=set],.v #fab [data-act=share],.v .ed{display:none}
 a{color:var(--h);text-decoration:underline;cursor:pointer}
-header{display:flex;flex-direction:column;align-items:center}.tb{order:3;display:flex;gap:8px;margin-top:8px}.tb button{border:1px solid var(--g);background:#ffffff1a;color:#fff;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer}
+header{display:flex;flex-direction:column;align-items:center}.tb{order:3;display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center}.tb button.pill{width:auto;border-radius:18px;padding:0 14px;background:var(--g);color:#000;font:700 14px Cairo,sans-serif;border-color:var(--g)}.tb button{border:1px solid var(--g);background:#ffffff1a;color:#fff;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer}
 .d{position:relative}.d em{position:absolute;top:0;right:1px;font-size:9px;font-style:normal}.d em.e{left:1px;right:auto}
 .hz{background:#eaf6ee;border-right:4px solid var(--ok);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:14px}
 .ft{text-align:center}
@@ -67,10 +67,13 @@ body.dark button.b.l{background:#2c4260;color:#fff}body.dark .d,body.dark .chip,
 .mq .sh{text-align:center;background:var(--n);color:#fff;border:1px solid var(--g);border-radius:8px;margin:10px 0 4px;font-size:20px}.mq .bs{text-align:center;font-size:22px;margin:4px 0}
 .mnav{display:flex;gap:8px;align-items:center;justify-content:center;margin:6px 0}
 .mchips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;margin:4px 0}.mchips a{border:1px solid var(--g);border-radius:12px;padding:2px 10px;cursor:pointer}.mchips a.on{background:var(--g);color:#000}
+.st{padding-inline-start:22px;line-height:2}.st li{margin:6px 0}.ib{background:#eef6ef;border-radius:10px;padding:10px;margin:8px 0;font-size:14px;line-height:1.9}body.dark .ib{background:#16342a}.mq{touch-action:pan-y}
+.hn{position:fixed;top:8px;left:8px;right:8px;max-width:520px;margin:0 auto;background:var(--c);color:var(--t);border:1px solid var(--g);border-radius:16px;box-shadow:0 8px 24px #0006;padding:10px 12px;display:flex;gap:10px;align-items:center;z-index:60;transform:translateY(-160%);transition:transform .35s ease;cursor:pointer}.hn.show{transform:none}
+.hn .hi{font-size:22px;background:var(--n);color:#fff;border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex:none}.hn b{display:block}.hn div{font-size:14px;flex:1}.hn small{flex:none}
 </style></head><body>
-<header><div class="tb"><button data-act="theme" id="bt" title="ليلي / نهاري">🌙</button><button data-act="mode" id="bm" title="كمبيوتر / هاتف">🖥️</button><button data-act="shareapp" title="مشاركة التطبيق">📤</button><button data-act="install" title="تثبيت التطبيق">📲</button></div><h1>📖 مراجعة الحفظ</h1><p>خطة مراجعة على مدار السنة</p></header>
+<header><div class="tb"><button data-act="theme" id="bt" title="ليلي / نهاري">🌙</button><button data-act="mode" id="bm" title="كمبيوتر / هاتف">🖥️</button><button data-act="shareapp" title="مشاركة التطبيق">📤</button><button data-act="notif" title="الإشعارات">🔔</button><button class="pill" data-act="install">📲 تثبيت التطبيق</button></div><h1>📖 مراجعة الحفظ</h1><p>خطة مراجعة على مدار السنة</p></header>
 <div class="vb">👀 وضع المشاهدة فقط <span id="vd"></span> — <a data-act="exit">فتح نسختي</a></div>
-<main><section id="today" class="card"></section><div id="alert"></div><section id="stats" class="stats"></section><section id="week" class="card"></section><section class="card"><div class="meta" style="margin:0 0 6px">🚩 بداية الدورة · 🏁 نهاية الدورة</div><div id="cal"></div></section><section class="card ft"><button class="b" data-act="shareapp">📤 مشاركة التطبيق</button><button class="b" data-act="install">📲 تثبيت التطبيق</button><button class="b g" data-act="contact">💬 تواصل مع المنشئ</button><p><button class="b l ed" data-act="reset">🔄 إعادة الضبط</button></p></section></main><div id="toast" class="toast"></div><div id="upd" class="upd">🔄 يتوفر تحديث جديد للتطبيق — <a data-act="reload">تحديث الآن</a></div><div id="dua" class="dua" onclick="this.classList.remove('show')"></div>
+<main><section id="today" class="card"></section><div id="alert"></div><section id="stats" class="stats"></section><section id="week" class="card"></section><section class="card"><div class="meta" style="margin:0 0 6px">🚩 بداية الدورة · 🏁 نهاية الدورة</div><div id="cal"></div></section><section class="card ft"><button class="b" data-act="shareapp">📤 مشاركة التطبيق</button><button class="b" data-act="install">📲 تثبيت التطبيق</button><button class="b g" data-act="contact">💬 تواصل مع المنشئ</button><p><button class="b l ed" data-act="reset">🔄 إعادة الضبط</button></p></section></main><div id="hn" class="hn" onclick="this.classList.remove('show')"></div><div id="toast" class="toast"></div><div id="upd" class="upd">🔄 يتوفر تحديث جديد للتطبيق — <a data-act="reload">تحديث الآن</a></div><div id="dua" class="dua" onclick="this.classList.remove('show')"></div>
 <nav id="fab"><button data-act="home" title="الرئيسية">🏠</button><button data-act="today" title="اليوم">📅</button><button data-act="set" title="الإعدادات">⚙️</button><button data-act="share" title="مشاركة للمتابعة">🔗</button></nav>
 <div id="sheet" class="sheet"><div class="in"><button class="x" data-act="close">✕</button><div id="sb"></div></div></div>
 <script>
@@ -83,7 +86,7 @@ const CAND=['qp','hp','p','p2','p3','p4','r1','r2','h','r6','j','j15','j2','j3']
 const DUR=[[7,'أسبوع'],[14,'أسبوعان'],[21,'3 أسابيع'],[28,'4 أسابيع (شهر)'],[60,'شهران'],[90,'3 أشهر']];
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-let S={start:iso(new Date()),sel:{s:[],j:[],h:[],r:[]},unit:'p',mode:'dur',dur:28,amt:1,order:'rev',done:[],skip:[],time:'05:00',hz:{on:0,u:'a5',n:1,s:114,off:[5,6]},hd:[],rest:[],nt:{},use:'rev',rn:0,rg:null},V=false,VT=0,done=new Set(),skip=new Set(),hd=new Set(),DP=null,curTab='j';
+let S={start:iso(new Date()),sel:{s:[],j:[],h:[],r:[]},unit:'p',mode:'dur',dur:28,amt:1,order:'rev',done:[],skip:[],time:'05:00',hz:{on:0,u:'a5',n:1,s:114,off:[5,6]},hd:[],rest:[],nt:{},use:'rev',rn:0,rg:null,ron:1,rs:0,sd:0},V=false,VT=0,done=new Set(),skip=new Set(),hd=new Set(),DP=null,curTab='j';
 const bs=(a,x)=>{let l=0,h=a.length-1;while(l<h){const m=(l+h+1)>>1;a[m]<=x?l=m:h=m-1}return l};
 const pageOf=a=>bs(D.p,a)+1,rEnd=r=>r<240?D.r[r]-1:6236,pEnd=p=>p<604?D.p[p]-1:6236;
 const sd=()=>{const[y,m,d]=S.start.split('-').map(Number);return Date.UTC(y,m-1,d)};
@@ -98,9 +101,13 @@ function mushaf(p,hl){MP.p=Math.min(604,Math.max(1,Math.round(p)||1));if(hl)MP.h
  const pg=[...new Set(MP.hl.flatMap(r=>{const o=[];for(let x=pageOf(r.a);x<=pageOf(r.b);x++)o.push(x);return o}))].sort((x,y)=>x-y).slice(0,14);
  sheet(`<h3>📖 المصحف — صفحة ${AR(MP.p)} <small>(الجزء ${Math.floor(bs(D.r,a)/8)+1})</small></h3>
  <div class="mnav"><button class="b l" data-act="mp" data-d="-1">‹ السابقة</button><input type="number" min="1" max="604" value="${MP.p}" onchange="mushaf(+this.value)" style="width:70px"><button class="b l" data-act="mp" data-d="1">التالية ›</button></div>
+ <div class="meta" style="text-align:center">👆 اسحب بإصبعك يمينًا للصفحة التالية، ويسارًا للسابقة</div>
  ${pg.length?`<div class="mchips"><small>صفحات الورد:</small>${pg.map(x=>`<a class="${x===MP.p?'on':''}" onclick="mushaf(${x})">${AR(x)}</a>`).join('')}</div>`:''}
  <div class="mq">${h}</div><div class="meta">عرض نصّي مقسّم على صفحات مصحف المدينة، وليس صورة المطبوع. النص: موسوعة القرآن الكريم (quranenc.com) عبر quran-json.</div>`);
- $('sb').parentNode.scrollTop=0}
+ MP.open=true;$('sb').parentNode.scrollTop=0}
+function swipePage(dx,dy){if(!MP.open||Math.abs(dx)<60||Math.abs(dx)<1.5*Math.abs(dy))return;mushaf(MP.p+(dx>0?1:-1))}
+let sx=0,sy=0;{const sh=$('sheet');if(sh&&sh.addEventListener){sh.addEventListener('touchstart',e=>{const t=e.changedTouches[0];sx=t.clientX;sy=t.clientY},{passive:true});sh.addEventListener('touchend',e=>{const t=e.changedTouches[0];swipePage(t.clientX-sx,t.clientY-sy)},{passive:true})}}
+document.addEventListener('keydown',e=>{if(!MP.open||/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||''))return;if(e.key==='ArrowLeft')mushaf(MP.p+1);if(e.key==='ArrowRight')mushaf(MP.p-1)});
 function hzItems(t){const z=S.hz,U=hzUnits(z.u);return z.off.includes(dow(t))?[...hd].filter(j=>j>=t-7&&j<t).flatMap(j=>hzAt(U,rank(j))):hzAt(U,rank(t))}
 const openAt=it=>{if(!it.length)return toast('لا يوجد ورد لهذا اليوم');mushaf(pageOf(Math.min(...it.map(x=>x.a))),it.map(x=>({a:x.a,b:x.b})))};
 const DN=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
@@ -193,7 +200,7 @@ function advice(P,t){let rm=0,hm=0;for(let i=Math.max(0,t-7);i<t;i++){if(!rest(i
  if(rm<3&&hm<3)return'';const a=rm>=3,b=hm>=3;
  return`<div class="warn" style="margin:10px 0 0">⚠️ لاحظنا عدم انتظام ${a&&b?'في المراجعة والحفظ':a?'في المراجعة':'في الحفظ'} خلال الأسبوع الماضي، فنوصي بـ<b>خطة أخف</b>: ${a?'زِد مدة دورة المراجعة أو صغّر وحدتها':''}${a&&b?'، و':''}${b?'قلّل كمية الحفظ اليومي (مثل 3 آيات)':''}.<br><b>«قليلٌ دائمٌ خيرٌ من كثيرٍ منقطع»</b> <small>(قول مأثور) — وفي الحديث: «أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ» (متفق عليه)</small>${V?'':'<br><button class="b" data-act="set">تعديل الخطة</button>'}</div>`}
 function render(){calcAI();const P=plan(),t=tIdx();NN=P.N;renderToday(P,t);renderAlert(P,t);renderStats(P,t);renderWeek(P,t);renderCal(P,t)}
-function sheet(h){$('sb').innerHTML=h;$('sheet').classList.add('show')}
+function sheet(h){MP.open=false;$('sb').innerHTML=h;$('sheet').classList.add('show')}
 function openDay(i){const P=plan(),d=new Date(sd()+i*DAY),f=(l,o)=>new Intl.DateTimeFormat(l,Object.assign({timeZone:'UTC'},o)).format(d);
  sheet(`<h3>${f('ar',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</h3><small>${f('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'})}</small><div class="qb" style="margin-top:10px">${rest(i)?'🌿 يوم راحة':lines(dayItems(P,i))}</div>${!rest(i)&&dayItems(P,i).length?`<button class="b l" data-act="musd" data-i="${i}">📖 افتح المصحف</button>`:''}${noteEdit(i)}`+
  (V?'':(rest(i)?'':`<button class="b ${done.has(i)?'l':'g'}" data-act="tog" data-i="${i}">${done.has(i)?'↩️ إلغاء المراجعة':'✅ تم المراجعة'}</button>`)+(S.hz.on&&!S.hz.off.includes(dow(i))?`<button class="b ${hd.has(i)?'l':'g'}" data-act="htog" data-i="${i}">${hd.has(i)?'↩️ إلغاء الحفظ':'📗 تم الحفظ'}</button>`:'')))}
@@ -230,10 +237,8 @@ function openSet(tab){curTab=tab||curTab;const st=$('sb').parentNode.scrollTop,b
  <small>ابدأ من سورة:</small> <select onchange="setz('s',+this.value)">${sel(NM.map((x,i)=>[i+1,(i+1)+'. '+x]),S.hz.s)}</select><br>
  <small>الاتجاه يتبع ترتيب المراجعة. المحفوظ الجديد لا يدخل خطة المراجعة تلقائيًا؛ أضفه من التحديد عند الحاجة.</small><br>
  <small>أيام بلا حفظ جديد (من 2 إلى 4) لمراجعة الحفظ الجديد:</small><br>${days('off')}`:''}
- <h4>${both?'٤':'٣'}) تاريخ بداية الخطة</h4><input type="date" value="${S.start}" onchange="setStart(this.value)"><div id="dts" class="meta" style="line-height:1.9"></div>
- <h4>${both?'٥':'٤'}) تذكير يومي</h4><input type="time" value="${S.time}" onchange="setv('time',this.value)">
- <label style="display:block;margin-top:6px"><input type="checkbox" ${S.rn?'checked':''} onchange="setRn(this.checked)"> إظهار الإشعار خارج التطبيق (مثل واتساب)</label>
- <small>بدون التأشير يظهر التذكير داخل التطبيق. وللتنبيه والتطبيق مغلق أضِف التذكير لتقويم الهاتف:</small> <button class="b" data-act="ics">📲 تقويم الهاتف</button>
+ <h4>${both?'٤':'٣'}) تاريخ بداية الخطة</h4><input type="date" value="${S.start}" max="${iso(new Date())}" onchange="setStart(this.value)"> <small>(اليوم افتراضيًا، ويمكن اختيار تاريخ سابق إن بدأت قبل التسجيل)</small><div id="dts" class="meta" style="line-height:1.9"></div>
+ <h4>${both?'٥':'٤'}) التذكير</h4><button class="b" data-act="notif">🔔 إعدادات التذكير والإشعارات</button>
  <p><button class="b l" data-act="reset">🔄 إعادة الضبط</button> <button class="b g" data-act="savebtn">💾 حفظ</button></p>`);$('sb').parentNode.scrollTop=st;sum()}
 function dates(P){const e=$('dts');if(!e)return;calcAI();const f=i=>new Intl.DateTimeFormat('ar',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(sd()+i*DAY));
  let c=-1;if(P.N)for(let i=0;i<365;i++)if(AI[i]===P.N-1){c=i;break}
@@ -244,23 +249,65 @@ function setDay(k,i,on){const A=new Set(k==='off'?S.hz.off:S.rest);on?A.add(i):A
  if(k==='off'){if(a.length<2||a.length>4){toast('اختر من يومين إلى 4 أيام');return openSet()}S.hz.off=a}
  else{const m=rmax();if(a.length>m){toast(m?`المتاح ${m} أيام راحة أسبوعيًا فقط بحسب مدة المراجعة التي اخترتها؛ زد المدة لأيام راحة أكثر`:restMsg(),2500);return refreshMode()}S.rest=a}
  save();render();refreshMode()}
+const PERM=()=>!window.Notification?'غير مدعوم في هذا المتصفح':{granted:'مسموح ✅',denied:'محظور ❌ — فعّله من إعدادات المتصفح للموقع',default:'لم يُطلب بعد'}[Notification.permission];
+function notifSheet(){sheet(`<h3>🔔 الإشعارات</h3>
+ <label><input type="checkbox" ${S.ron?'checked':''} onchange="setn('ron',this.checked?1:0)"> تفعيل التذكير اليومي</label>
+ <h4>وقت التذكير</h4><input type="time" value="${S.time}" onchange="setn('time',this.value)">
+ <h4>شكل الإشعار</h4>
+ <label><input type="radio" name="rs" ${S.rs?'':'checked'} onchange="setn('rs',0)"> 📝 مكتوب فقط</label><br>
+ <label><input type="radio" name="rs" ${S.rs?'checked':''} onchange="setn('rs',1)"> 🔊 مكتوب ومسموع (نغمة ثم قراءة الرسالة)</label>
+ <h4>خارج التطبيق</h4>
+ <label><input type="checkbox" ${S.rn?'checked':''} onchange="setRn(this.checked)"> إظهار الإشعار خارج التطبيق (مثل واتساب)</label>
+ <div class="meta">إذن المتصفح: ${PERM()}</div>
+ <p><button class="b g big" data-act="testn">🔔 جرّب الإشعار الآن</button></p>
+ <div class="ib"><b>ملاحظات صريحة</b><br>• داخل التطبيق: يظهر شريط من الأعلى عندما يكون التطبيق مفتوحًا بعد وقت التذكير ولم تسجّل إنجاز اليوم.<br>• خارج التطبيق: يصل ما دام التطبيق مفتوحًا أو في الخلفية، ولا يصل إذا أُغلق تمامًا.<br>• للتنبيه والتطبيق مغلق: أضِف التذكير لتقويم الهاتف.<br>• الصوت قد يمنعه المتصفح إن لم تتفاعل مع الصفحة، وقراءة العربية تعتمد على أصوات جهازك.</div>
+ <button class="b" data-act="ics">📲 أضف التذكير لتقويم الهاتف</button>`)}
+function setn(k,v){S[k]=v;save()}
 function setRn(on){S.rn=on?1:0;save();
- if(on&&!window.Notification){S.rn=0;save();toast('متصفحك لا يدعم الإشعارات الخارجية — استخدم تقويم الهاتف',3000);return openSet()}
- if(on&&Notification.permission==='default')Notification.requestPermission().then(p=>{if(p!=='granted'){S.rn=0;save();openSet();toast('لم يُسمح بالإشعارات من المتصفح',3000)}})}
-function remCheck(){if(V)return;const t=tIdx();if(t<0||t>364||(!NN&&!S.hz.on))return;const n=new Date(),hm=pad(n.getHours())+':'+pad(n.getMinutes()),td=iso(n);
- if(hm<S.time||full(t)||lsg('qr_rem')===td)return;try{localStorage.setItem('qr_rem',td)}catch(e){}
- const m='📖 حان وقت مراجعة الحفظ';let ok=0;
- if(S.rn&&window.Notification&&Notification.permission==='granted'){try{new Notification(m,{body:'افتح التطبيق لتسجيل إنجاز اليوم'});ok=1}catch(e){}}
- if(!ok)toast(m+' — لم تسجّل إنجاز اليوم بعد',6000)}
+ if(on&&!window.Notification){S.rn=0;save();toast('متصفحك لا يدعم الإشعارات الخارجية — استخدم تقويم الهاتف',3000);return notifSheet()}
+ if(on&&Notification.permission==='default')Notification.requestPermission().then(p=>{if(p!=='granted'){S.rn=0;save();toast('لم يُسمح بالإشعارات من المتصفح',3000)}notifSheet()});else notifSheet()}
+function chime(){try{const C=window.AudioContext||window.webkitAudioContext,c=new C(),t=c.currentTime;c.resume&&c.resume();
+ [[880,0],[1175,.18],[1568,.36]].forEach(([f,d])=>{const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+.3);o.connect(g);g.connect(c.destination);o.start(t+d);o.stop(t+d+.32)})}catch(e){}}
+function speak(m){try{const u=new SpeechSynthesisUtterance(m);u.lang='ar-SA';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+let hnT;function showHn(t,b){const e=$('hn');e.innerHTML=`<span class="hi">⭐</span><div><b>${t}</b>${b}</div><small>الآن</small>`;e.classList.add('show');clearTimeout(hnT);hnT=setTimeout(()=>e.classList.remove('show'),7000)}
+function outside(t,b){const o={body:b,icon:'icon-192.png',badge:'icon-192.png',tag:'qr-rem',lang:'ar',dir:'rtl'};
+ try{if(navigator.serviceWorker&&navigator.serviceWorker.ready)return navigator.serviceWorker.ready.then(r=>r.showNotification(t,o))}catch(e){}
+ try{new Notification(t,o)}catch(e){}}
+function notify(t,b,test){const vis=!document.hidden,out=S.rn&&window.Notification&&Notification.permission==='granted';
+ if(vis||test){showHn(t,b);if(S.rs){chime();speak(t+'. '+b)}}
+ if(out&&(!vis||test))outside(t,b)}
+function remCheck(){if(V||!S.ron)return;const t=tIdx();if(t<0||t>364||(!NN&&!S.hz.on))return;const n=new Date(),hm=pad(n.getHours())+':'+pad(n.getMinutes()),td=iso(n);
+ if(hm<S.time||full(t)||lsg('qr_rem')===td)return;
+ const out=S.rn&&window.Notification&&Notification.permission==='granted';if(document.hidden&&!out)return; // ننتظر عودة المستخدم
+ try{localStorage.setItem('qr_rem',td)}catch(e){}
+ notify('📖 مراجعة الحفظ','حان وقت مراجعة اليوم — لم تسجّل إنجازك بعد')}
 function setz(k,v){S.hz[k]=v;save();render()}
 function setv(k,v){S[k]=v;fix(k==='dur');save();render();if(['dur','mode','unit'].includes(k)){refreshMode();if(S.mode==='dur'&&k!=='unit')toast(restMsg())}else sum()}
-function setStart(v){if(!v)return;if(done.size&&!confirm('تغيير تاريخ البداية يصفّر سجل الإنجاز. متابعة؟'))return openSet();done.clear();skip.clear();hd.clear();S.nt={};setv('start',v)}
+function setStart(v){if(!v)return;if(v>iso(new Date())){toast('لا يمكن اختيار تاريخ مستقبلي');return openSet()}
+ if(done.size&&!confirm('تغيير تاريخ البداية يصفّر سجل الإنجاز. متابعة؟'))return openSet();
+ done.clear();skip.clear();hd.clear();S.nt={};S.sd=1;S.start=v;calcAI();const n=Math.min(tIdx(),364);
+ if(n>0&&plan().N&&confirm(`بدأتَ قبل ${n} يومًا.\nهل أنجزتَ المراجعة في هذه الأيام؟\n\nموافق: تُحسب منجزة\nإلغاء: تبقى فائتة`)){for(let k=0;k<n;k++)if(!rest(k))done.add(k)}
+ save();fix();render();openSet()}
 // ---- أوامر ----
 function shareLink(){return location.href.split('#')[0]+'#v='+btoa(JSON.stringify(S)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')+'&t='+Date.now()}
 function ics(){const[h,m]=S.time.split(':'),n=new Date(),z=n.toISOString().replace(/[-:]|\.\d{3}/g,'');
  const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//QuranReview//AR','BEGIN:VEVENT','UID:qr-'+Date.now()+'@review','DTSTAMP:'+z,`DTSTART:${n.getFullYear()}${pad(n.getMonth()+1)}${pad(n.getDate())}T${h}${m}00`,'RRULE:FREQ=DAILY;COUNT=365','SUMMARY:📖 مراجعة الحفظ','BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:وقت مراجعة الحفظ','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/calendar'}));a.download='مراجعة-الحفظ.ics';a.click()}
-const ACT={close(){$('sheet').classList.remove('show')},
+function installSheet(){
+ const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),and=/Android/.test(ua),
+  inapp=/FBAN|FBAV|Instagram|MicroMessenger|Snapchat|Line\/|TikTok|; wv\)/.test(ua),
+  installed=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
+ if(installed)return sheet('<h3>✅ التطبيق مثبّت</h3><p>أنت تستخدمه الآن كتطبيق مستقل على جهازك.</p>');
+ const why='<div class="ib"><b>لماذا التثبيت؟</b><br>• أيقونة على شاشتك تفتح التطبيق مباشرة بدون شريط المتصفح<br>• يعمل بدون إنترنت بعد أول تحميل<br>• تصله التحديثات تلقائيًا<br>• يحتفظ بخطتك وإنجازك</div>';
+ const warn=inapp?'<div class="warn">⚠️ أنت تفتح الرابط من داخل تطبيق آخر (مثل واتساب أو فيسبوك)، والتثبيت لا يعمل من داخله. افتح الرابط في المتصفح أولًا (سفاري على الآيفون، وكروم على الأندرويد)، ثم أعد المحاولة.</div>':'';
+ let b;
+ if(DP)b='<p>جهازك جاهز للتثبيت بضغطة واحدة:</p><button class="b g big" data-act="doinstall">📲 ثبّت التطبيق الآن</button>';
+ else if(ios)b='<p><b>على الآيفون والآيباد:</b></p><ol class="st"><li>افتح الرابط في <b>سفاري</b> (وليس من داخل واتساب)</li><li>اضغط زر المشاركة <b>⬆️</b> (مربع بسهم لأعلى) أسفل الشاشة</li><li>مرّر القائمة لأسفل واختر <b>«إضافة إلى الشاشة الرئيسية»</b></li><li>اضغط <b>«إضافة»</b> أعلى الشاشة، فتظهر أيقونة النجمة على شاشتك</li></ol>';
+ else if(and)b='<p><b>على الأندرويد (كروم):</b></p><ol class="st"><li>اضغط القائمة <b>⋮</b> (ثلاث نقاط) أعلى الشاشة</li><li>اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b></li><li>اضغط <b>«تثبيت»</b>، فتظهر أيقونة النجمة على شاشتك</li></ol>';
+ else b='<p><b>على الكمبيوتر (كروم أو إيدج):</b></p><ol class="st"><li>انظر إلى يمين شريط العنوان وابحث عن أيقونة التثبيت <b>⊕</b></li><li>اضغطها ثم اختر <b>«تثبيت»</b></li><li>أو من القائمة <b>⋮</b> اختر <b>«تثبيت مراجعة الحفظ»</b></li></ol>';
+ sheet('<h3>📲 تثبيت التطبيق على جهازك</h3>'+warn+why+b+'<small>إن لم يظهر خيار التثبيت، فتأكد أنك فتحت الرابط في المتصفح مباشرة وأن الصفحة حُمّلت كاملة.</small>')}
+window.addEventListener('appinstalled',()=>toast('✅ تم تثبيت التطبيق'));
+const ACT={close(){MP.open=false;$('sheet').classList.remove('show')},
  today(){const e=$('d'+Math.min(Math.max(tIdx(),0),364));e&&e.scrollIntoView({behavior:'smooth',block:'center'})},
  mark(){const t=tIdx();if(t<0||t>364||!plan().N||rest(t))return;if(done.has(t))return;missed(t).forEach(i=>done.add(i));done.add(t);save();finish(t,'r')},
  hmark(){const t=tIdx();if(t<0||t>364||S.hz.off.includes(dow(t)))return;if(hd.has(t))return;hd.add(t);save();finish(t,'h')},
@@ -272,6 +319,8 @@ const ACT={close(){$('sheet').classList.remove('show')},
  share(){sheet(`<h3>🔗 رابط المتابعة (مشاهدة فقط)</h3><input type="text" id="sl" readonly style="width:100%" value="${shareLink()}" onclick="this.select()"><p><small>لولي الأمر أو الشيخ: يرى الخطة والإنجاز ولا يستطيع التعديل. هذه صورة لحالتك الآن، فأعد إرسال الرابط بعد أي تحديث.</small></p><button class="b" data-act="copy">📋 نسخ</button><button class="b g" data-act="wa">واتساب</button>`)},
  copy(){const i=$('sl');i.select();navigator.clipboard?navigator.clipboard.writeText(i.value):document.execCommand('copy')},
  wa(){window.open('https://wa.me/?text='+encodeURIComponent('📖 متابعة مراجعة الحفظ (مشاهدة فقط):\n'+$('sl').value),'_blank')},
+ notif(){notifSheet()},
+ testn(){notify('📖 مراجعة الحفظ','هذا إشعار تجريبي — حان وقت مراجعة اليوم',1)},
  reload(){location.href=location.href.split('#')[0].split('?')[0]+'?v='+Date.now()+location.hash},
  mus(a){const t=tIdx();openAt(a.dataset.w==='r'?dayItems(plan(),t):hzItems(t))},
  musd(a){openAt(dayItems(plan(),+a.dataset.i))},
@@ -283,7 +332,8 @@ const ACT={close(){$('sheet').classList.remove('show')},
  theme(){const d=!document.body.classList.contains('dark');try{localStorage.setItem('qr_theme',d?'dark':'light')}catch(e){}ui()},
  mode(){const d=!document.body.classList.contains('desk');try{localStorage.setItem('qr_mode',d?'desk':'phone')}catch(e){}ui()},
  shareapp(){const u=location.href.split('#')[0],t='📖 تطبيق مراجعة وحفظ القرآن';navigator.share?navigator.share({title:t,url:u}).catch(()=>{}):window.open('https://wa.me/?text='+encodeURIComponent(t+'\n'+u),'_blank')},
- install(){DP?(DP.prompt(),DP=null):sheet('<h3>📲 تثبيت التطبيق</h3><p>أندرويد (كروم): القائمة ⋮ ثم «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».<br>آيفون (سفاري): زر المشاركة ⬆️ ثم «إضافة إلى الشاشة الرئيسية».<br>الكمبيوتر (كروم/إيدج): أيقونة التثبيت في شريط العنوان.</p><small>يعمل التثبيت الكامل عندما يكون التطبيق مستضافًا على رابط https.</small>')},
+ install(){installSheet()},
+ doinstall(){if(!DP)return;DP.prompt();DP.userChoice&&DP.userChoice.then(c=>{if(c.outcome==='accepted')toast('✅ جارٍ التثبيت');DP=null})},
  contact(){window.open('https://wa.me/97477107247?text='+encodeURIComponent('السلام عليكم أ. عزت، بخصوص تطبيق مراجعة الحفظ:'),'_blank')}};
 const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 function ui(){const th=lsg('qr_theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),md=lsg('qr_mode')||(innerWidth>=900?'desk':'phone');
@@ -293,10 +343,10 @@ if(typeof navigator!=='undefined'&&'serviceWorker' in navigator&&/^https?:/.test
 setInterval(remCheck,30000);
 document.addEventListener('click',e=>{const d=e.target.closest('.d');if(d)return openDay(+d.dataset.i);const a=e.target.closest('[data-act]');a&&ACT[a.dataset.act]&&ACT[a.dataset.act](a)});
 window.addEventListener('hashchange',()=>location.reload());
-const BUILD='20261014-061205';
+const BUILD='20261014-112930';
 async function chk(){try{if(!/^https?:/.test(location.protocol))return;const r=await fetch(location.href.split('#')[0].split('?')[0]+'?_='+Date.now(),{cache:'no-store',headers:{Range:'bytes=0-2047'}}),m=(await r.text()).match(/name="build" content="([^"]+)"/);if(m&&m[1]!==BUILD)$('upd').classList.add('show')}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});setInterval(chk,18e5);
-function init(){load();ui();if(!V){fix();save()}document.body.classList.toggle('v',V);if(V&&VT)$('vd').textContent='(آخر تحديث: '+new Date(VT).toLocaleString('ar',{dateStyle:'medium',timeStyle:'short'})+')';
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){chk();remCheck()}});setInterval(chk,18e5);
+function init(){load();ui();if(!V){if(!S.sd&&!done.size&&!hd.size)S.start=iso(new Date());fix();save()}document.body.classList.toggle('v',V);if(V&&VT)$('vd').textContent='(آخر تحديث: '+new Date(VT).toLocaleString('ar',{dateStyle:'medium',timeStyle:'short'})+')';
  render();chk();setTimeout(remCheck,1500);if(!V&&!plan().N)openSet();else setTimeout(()=>{},0)}
 init();
 </script></body></html>

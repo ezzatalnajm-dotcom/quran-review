@@ -48,3 +48,12 @@ self.addEventListener('fetch', e => {
     e.respondWith(caches.open(V).then(c => c.match(r).then(m => m || fetch(r).then(res => { c.put(r, res.clone()); return res; }))));
   }
 });
+
+// الضغط على الإشعار يفتح التطبيق (أو يعيد التركيز عليه إن كان مفتوحًا)
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) return c.focus(); }
+    return clients.openWindow(ROOT);
+  }));
+});
