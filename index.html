@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261014-112930"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
+<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261016-060040"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--h:#0f2a4a;--c:#fff;--t:#1d2a3a;--n:#0f2a4a;--g:#d4a93c;--bg:#f5f2ea;--ok:#2f9e63;--ms:#d9534f}
@@ -70,6 +70,11 @@ body.dark button.b.l{background:#2c4260;color:#fff}body.dark .d,body.dark .chip,
 .st{padding-inline-start:22px;line-height:2}.st li{margin:6px 0}.ib{background:#eef6ef;border-radius:10px;padding:10px;margin:8px 0;font-size:14px;line-height:1.9}body.dark .ib{background:#16342a}.mq{touch-action:pan-y}
 .hn{position:fixed;top:8px;left:8px;right:8px;max-width:520px;margin:0 auto;background:var(--c);color:var(--t);border:1px solid var(--g);border-radius:16px;box-shadow:0 8px 24px #0006;padding:10px 12px;display:flex;gap:10px;align-items:center;z-index:60;transform:translateY(-160%);transition:transform .35s ease;cursor:pointer}.hn.show{transform:none}
 .hn .hi{font-size:22px;background:var(--n);color:#fff;border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex:none}.hn b{display:block}.hn div{font-size:14px;flex:1}.hn small{flex:none}
+.rcb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:8px 0}
+.micb{background:var(--n);color:#fff;border:2px solid var(--g);border-radius:26px;padding:10px 24px;font:700 17px Cairo,sans-serif;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer}.micb.on{background:#d9534f}
+.seg2{display:flex}.seg2 button{border:1px solid var(--n);background:var(--c);color:var(--h);padding:8px 12px;font:13px Cairo,sans-serif;cursor:pointer}.seg2 button:first-child{border-radius:0 18px 18px 0}.seg2 button:last-child{border-radius:18px 0 0 18px}.seg2 button.on{background:var(--n);color:#fff}
+.mq .er{color:#d9534f;font-weight:700}.mq .dt{color:#8a94a0;letter-spacing:3px}
+.rr{border:2px solid;border-radius:14px;padding:10px;text-align:center;margin:8px 0}.rr .pc{font-size:34px;font-weight:700}
 </style></head><body>
 <header><div class="tb"><button data-act="theme" id="bt" title="ليلي / نهاري">🌙</button><button data-act="mode" id="bm" title="كمبيوتر / هاتف">🖥️</button><button data-act="shareapp" title="مشاركة التطبيق">📤</button><button data-act="notif" title="الإشعارات">🔔</button><button class="pill" data-act="install">📲 تثبيت التطبيق</button></div><h1>📖 مراجعة الحفظ</h1><p>خطة مراجعة على مدار السنة</p></header>
 <div class="vb">👀 وضع المشاهدة فقط <span id="vd"></span> — <a data-act="exit">فتح نسختي</a></div>
@@ -86,26 +91,92 @@ const CAND=['qp','hp','p','p2','p3','p4','r1','r2','h','r6','j','j15','j2','j3']
 const DUR=[[7,'أسبوع'],[14,'أسبوعان'],[21,'3 أسابيع'],[28,'4 أسابيع (شهر)'],[60,'شهران'],[90,'3 أشهر']];
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-let S={start:iso(new Date()),sel:{s:[],j:[],h:[],r:[]},unit:'p',mode:'dur',dur:28,amt:1,order:'rev',done:[],skip:[],time:'05:00',hz:{on:0,u:'a5',n:1,s:114,off:[5,6]},hd:[],rest:[],nt:{},use:'rev',rn:0,rg:null,ron:1,rs:0,sd:0},V=false,VT=0,done=new Set(),skip=new Set(),hd=new Set(),DP=null,curTab='j';
+let S={start:iso(new Date()),sel:{s:[],j:[],h:[],r:[]},unit:'p',mode:'dur',dur:28,amt:1,order:'rev',done:[],skip:[],time:'05:00',hz:{on:0,u:'a5',n:1,s:114,off:[5,6]},hd:[],rest:[],nt:{},use:'rev',rn:0,rg:null,ron:1,rs:0,sd:0,rm:'hide'},V=false,VT=0,done=new Set(),skip=new Set(),hd=new Set(),DP=null,curTab='j';
 const bs=(a,x)=>{let l=0,h=a.length-1;while(l<h){const m=(l+h+1)>>1;a[m]<=x?l=m:h=m-1}return l};
 const pageOf=a=>bs(D.p,a)+1,rEnd=r=>r<240?D.r[r]-1:6236,pEnd=p=>p<604?D.p[p]-1:6236;
 const sd=()=>{const[y,m,d]=S.start.split('-').map(Number);return Date.UTC(y,m-1,d)};
 const tIdx=()=>{const n=new Date();return Math.round((Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())-sd())/DAY)};
 const BSM=T[0],AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
 let MP={p:1,hl:[]};
-function mushaf(p,hl){MP.p=Math.min(604,Math.max(1,Math.round(p)||1));if(hl)MP.hl=hl;
- const a=D.p[MP.p-1],b=pEnd(MP.p),inH=i=>MP.hl.some(r=>i>=r.a&&i<=r.b);let h='';
- for(let i=a;i<=b;i++){const q=bs(SS,i),n=i-SS[q]+1;
-  if(n===1)h+=`<div class="sh">سورة ${NM[q]}</div>`+(q!==0&&q!==8?`<div class="bs">${BSM}</div>`:'');
-  h+=`<span class="${inH(i)?'hl':''}">${T[i-1]}</span> <span class="ae">﴿${AR(n)}﴾</span> `}
+// ===== التسميع: مطابقة الكلمات (الحروف فقط، دون التشكيل) =====
+const LIM=4;
+const strip=w=>w.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u0640\u06D6-\u06ED\u08D3-\u08FF]/g,'');
+const norm=w=>strip(w).replace(/[ٱأإآ]/g,'ا').replace(/[ىئی]/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/[^\u0621-\u064A]/g,'').replace(/ء/g,'');
+const lev=(a,b)=>{const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]};
+const same=(a,b)=>{if(a===b)return 1;const L=Math.max(a.length,b.length);return L>=4&&lev(a,b)/L<=0.34};
+function align(E,R){const n=E.length,m=R.length,I=.3,d=Array.from({length:n+1},()=>new Float64Array(m+1));
+ for(let i=1;i<=n;i++)d[i][0]=i;for(let j=1;j<=m;j++)d[0][j]=j*I;
+ for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+I,d[i-1][j-1]+(same(E[i-1],R[j-1])?0:1));
+ const ok=new Array(n).fill(0);let i=n,j=m;
+ while(i>0||j>0){const sm=i>0&&j>0&&same(E[i-1],R[j-1])?1:0;
+  if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(sm?0:1)){ok[i-1]=sm;i--;j--}else if(i>0&&d[i][j]===d[i-1][j]+1)i--;else j--}
+ return ok}
+const band=p=>p>=85?['ممتاز','#1e9e5a']:p>=75?['جيد جدًا','#4caf50']:p>=60?['جيد','#c99a2e']:p>=45?['مقبول','#e08a2e']:['يحتاج مراجعة أكثر','#d9534f'];
+function scopeData(){const q0=MP.scope?MP.scope.q:null,a=q0!=null?SS[q0]:D.p[MP.p-1],b=q0!=null?SS[q0]+D.c[q0]-1:pEnd(MP.p),segs=[],E=[];
+ for(let i=a;i<=b;i++){const q=bs(SS,i),n=i-SS[q]+1;let g=segs[segs.length-1];if(!g||g.q!==q){g={q,ays:[]};segs.push(g)}
+  g.ays.push({i,n,ws:T[i-1].split(' ').filter(Boolean).map(w=>{const x=norm(w);return{w,k:x?E.push(x)-1:-1}})})}
+ return{a,b,segs,E}}
+function mqHtml(){const d=scopeData(),v=MP.view,st=MP.st||[],inH=i=>MP.hl.some(r=>i>=r.a&&i<=r.b);let h='';
+ d.segs.forEach(g=>{if(g.ays[0].n===1)h+=`<div class="sh">سورة ${NM[g.q]}</div>`+(v!=='hide'&&g.q!==0&&g.q!==8?`<div class="bs">${BSM}</div>`:'');
+  g.ays.forEach((y,ai)=>{const last=ai===g.ays.length-1;
+   if(v==='hide'){const k=y.ws.length,vf=ai===0?y.ws[0].w:'',vl=last&&(k>1||ai>0)?y.ws[k-1].w:'',hid=k-(vf?1:0)-(vl?1:0);
+    h+=(vf?`<span>${vf}</span> `:'')+(hid>0?'<span class="dt">· · ·</span> ':'')+(vl?`<span>${vl}</span> `:'')}
+   else if(v==='review')h+=y.ws.map(t=>`<span class="${t.k>=0&&st[t.k]===0?'er':''}">${t.w}</span>`).join(' ')+' ';
+   else h+=`<span class="${inH(y.i)?'hl':''}">${T[y.i-1]}</span> `;
+   h+=`<span class="ae">﴿${AR(y.n)}﴾</span> `})});
+ return h}
+function mushaf(p,hl,keep){recAbort();MP.p=Math.min(604,Math.max(1,Math.round(p)||1));if(hl)MP.hl=hl;if(!keep)MP.scope=null;MP.view='read';MP.st=null;
+ const a=D.p[MP.p-1],b=pEnd(MP.p);
  const pg=[...new Set(MP.hl.flatMap(r=>{const o=[];for(let x=pageOf(r.a);x<=pageOf(r.b);x++)o.push(x);return o}))].sort((x,y)=>x-y).slice(0,14);
- sheet(`<h3>📖 المصحف — صفحة ${AR(MP.p)} <small>(الجزء ${Math.floor(bs(D.r,a)/8)+1})</small></h3>
+ const so=[];for(let q=bs(SS,a);q<=bs(SS,b);q++){const sp=pageOf(SS[q]+D.c[q]-1)-pageOf(SS[q])+1;if(sp<=LIM)so.push(`<option value="${q}"${MP.scope&&MP.scope.q===q?' selected':''}>تسميع سورة ${NM[q]}${sp>1?' ('+AR(sp)+' ص)':''}</option>`)}
+ sheet(`<h3>📖 المصحف — صفحة ${AR(MP.p)} <small>(الجزء ${Math.floor(bs(D.r,a)/8)+1})</small>${MP.scope?` <small>— سورة ${NM[MP.scope.q]} كاملة</small>`:''}</h3>
  <div class="mnav"><button class="b l" data-act="mp" data-d="-1">‹ السابقة</button><input type="number" min="1" max="604" value="${MP.p}" onchange="mushaf(+this.value)" style="width:70px"><button class="b l" data-act="mp" data-d="1">التالية ›</button></div>
  <div class="meta" style="text-align:center">👆 اسحب بإصبعك يمينًا للصفحة التالية، ويسارًا للسابقة</div>
  ${pg.length?`<div class="mchips"><small>صفحات الورد:</small>${pg.map(x=>`<a class="${x===MP.p?'on':''}" onclick="mushaf(${x})">${AR(x)}</a>`).join('')}</div>`:''}
- <div class="mq">${h}</div><div class="meta">عرض نصّي مقسّم على صفحات مصحف المدينة، وليس صورة المطبوع. النص: موسوعة القرآن الكريم (quranenc.com) عبر quran-json.</div>`);
- MP.open=true;$('sb').parentNode.scrollTop=0}
-function swipePage(dx,dy){if(!MP.open||Math.abs(dx)<60||Math.abs(dx)<1.5*Math.abs(dy))return;mushaf(MP.p+(dx>0?1:-1))}
+ <div class="rcb"><button id="mic" class="micb">🎤 سمع</button><div class="seg2"><button class="${S.rm!=='show'?'on':''}" data-act="rm" data-v="hide">🙈 بدون المكتوب</button><button class="${S.rm==='show'?'on':''}" data-act="rm" data-v="show">👁 مع المكتوب</button></div>${so.length?`<select onchange="setScope(this.value)"><option value="">تسميع الصفحة</option>${so.join('')}</select>`:''}</div>
+ <div class="meta" style="text-align:center">اضغط على 🎤 مع الاستمرار وسمّع، ثم أفلت. (أو اضغطة سريعة للبدء وأخرى للإيقاف)</div>
+ <div id="rcres"></div><div class="mq" id="mqw">${mqHtml()}</div><div class="meta">عرض نصّي مقسّم على صفحات مصحف المدينة، وليس صورة المطبوع. النص: موسوعة القرآن الكريم (quranenc.com) عبر quran-json.</div>`);
+ bindMic();MP.open=true;$('sb').parentNode.scrollTop=0}
+function setScope(v){MP.scope=v===''?null:{q:+v};mushaf(MP.p,null,1)}
+// ----- الميكروفون والتعرف على الصوت -----
+let rc=null,fin=[],inter='',holding=false,toggled=false,t0=0,stopping=false,ended=false;
+const SRC=()=>window.SpeechRecognition||window.webkitSpeechRecognition;
+const errMsg=c=>({'not-allowed':'الميكروفون غير مسموح — اسمح للموقع باستخدامه من إعدادات المتصفح','service-not-allowed':'خدمة التعرف على الصوت غير مسموحة في هذا المتصفح','audio-capture':'لا يوجد ميكروفون أو لا يمكن الوصول إليه','network':'لا يوجد اتصال بالإنترنت (التعرف على الصوت يحتاجه)','language-not-supported':'اللغة العربية غير مدعومة في التعرف على الصوت لديك'}[c]||'تعذّر التعرف على الصوت ('+c+')');
+function setMic(t,on){const m=$('mic');if(m){m.textContent=t;m.classList.toggle('on',!!on)}}
+function note(m,diag){const e=$('rcres');if(e)e.innerHTML=`<div class="warn">${m}${diag?'<br><button class="b" data-act="micchk">🎤 افحص الميكروفون</button>':''}</div>`}
+function recAbort(){if(rc){stopping=true;ended=true;const r=rc;rc=null;try{r.stop()}catch(e){}}holding=false;toggled=false}
+function bindMic(){const m=$('mic');if(!m)return;m.onpointerdown=micDown;m.onpointerup=micUp;m.onpointercancel=micUp;m.oncontextmenu=e=>e.preventDefault()}
+function micDown(e){e.preventDefault&&e.preventDefault();try{e.target.setPointerCapture(e.pointerId)}catch(x){}
+ if(rc&&toggled){recStop();return}if(rc)return;holding=true;toggled=false;t0=Date.now();recStart()}
+function micUp(){if(!holding)return;holding=false;if(!rc)return;if(Date.now()-t0<350){toggled=true;setMic('🔴 اضغط للإيقاف',1)}else recStop()}
+function recStart(){const R=SRC();if(!R){holding=false;note('المتصفح لا يدعم التعرف على الصوت. افتح التطبيق في كروم أو إيدج أو سفاري.',1);return}
+ fin=[];inter='';stopping=false;ended=false;MP.view=S.rm==='show'?'read':'hide';MP.st=null;$('rcres').innerHTML='';$('mqw').innerHTML=mqHtml();
+ const go=()=>{const r=new R();rc=r;r.lang='ar-SA';r.continuous=true;r.interimResults=true;
+  r.onresult=e=>{inter='';for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];x.isFinal?fin.push(x[0].transcript):inter+=x[0].transcript}};
+  r.onerror=e=>{if(e.error==='no-speech'||e.error==='aborted')return;stopping=true;recFail(errMsg(e.error))};
+  r.onend=()=>{if(rc!==r)return;if(!stopping&&(holding||toggled)){try{go()}catch(x){recFinish()}}else recFinish()};
+  try{r.start()}catch(x){rc=null;recFail('تعذّر بدء الاستماع — جرّب مرة أخرى')}};
+ go();if(rc)setMic('🔴 أفلت للإيقاف',1)}
+function recStop(){stopping=true;toggled=false;holding=false;setMic('⏳ جارٍ التقدير…');try{rc&&rc.stop()}catch(x){recFinish()}}
+function recFail(m){rc=null;holding=false;toggled=false;ended=true;MP.view='read';$('mqw').innerHTML=mqHtml();setMic('🎤 سمع');note('❌ '+m,1)}
+function recFinish(){if(ended)return;ended=true;rc=null;setMic('🎤 سمع');evalRec(fin.join(' ')+' '+inter)}
+function evalRec(txt){const E=scopeData().E,R=txt.split(/\s+/).map(norm).filter(Boolean);
+ if(!R.length){MP.view='read';$('mqw').innerHTML=mqHtml();return note('لم أسمع شيئًا. تأكد أن الميكروفون يعمل وتكلّم قريبًا منه.',1)}
+ const ok=align(E,R),good=ok.reduce((x,y)=>x+y,0),p=Math.round(100*good/E.length),bd=band(p);
+ MP.st=ok;MP.view='review';MP.score=p;$('mqw').innerHTML=mqHtml();
+ $('rcres').innerHTML=`<div class="rr" style="border-color:${bd[1]}"><div class="pc" style="color:${bd[1]}">${AR(p)}٪</div><b style="color:${bd[1]}">${bd[0]}</b><div>صحيحة ${AR(good)} من ${AR(E.length)} كلمة · أخطاء ${AR(E.length-good)}</div><small>تقدير تقريبي على الحروف والكلمات فقط، ولا يحكم على التشكيل ولا التجويد. الأحمر: كلمات لم تُقرأ أو اختلفت.</small><br><button class="b g" data-act="rcagain">🔁 أعد التسميع</button><button class="b l" data-act="rcnorm">عرض/إخفاء الأخطاء</button></div>`}
+async function micCheck(){recAbort();const L=[],ok=(c,t,f)=>L.push(c?'✅ '+t:'❌ '+t+' — <b>'+f+'</b>'),ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua),sa=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
+ ok(!!SRC(),'المتصفح يدعم التعرف على الصوت','استخدم كروم أو إيدج أو سفاري (فايرفوكس لا يدعمه)');
+ ok(/^https:|^http:\/\/localhost/.test(location.href),'الرابط آمن (https)','الميكروفون لا يعمل إلا على رابط https');
+ ok(navigator.onLine!==false,'يوجد اتصال بالإنترنت','التعرف على الصوت يحتاج إنترنت');
+ ok(!(ios&&sa),'يعمل من المتصفح','على الآيفون افتح التطبيق من سفاري وليس من الأيقونة على الشاشة');
+ try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());ok(true,'الميكروفون يعمل والإذن ممنوح')}catch(e){ok(false,'الميكروفون','اسمح للموقع باستخدام الميكروفون ('+((e&&e.name)||'خطأ')+')')}
+ sheet(`<h3>🎤 فحص الميكروفون</h3><div class="ib">${L.join('<br>')}</div><p><button class="b g big" data-act="mictest">🎙️ جرّب الآن (تكلّم 5 ثوانٍ)</button></p><div id="mtres" class="meta"></div><button class="b l" data-act="mp0">↩️ رجوع للمصحف</button>`)}
+function micTest(){const R=SRC(),e=$('mtres');if(!R){e.textContent='❌ التعرف على الصوت غير مدعوم';return}
+ const r=new R();r.lang='ar-SA';e.textContent='🎙️ تكلّم الآن…';let heard=0;
+ r.onresult=ev=>{heard=1;e.innerHTML='سمعتُ: <b>'+esc(ev.results[0][0].transcript)+'</b>'};r.onerror=ev=>{heard=1;e.textContent='❌ '+errMsg(ev.error)};r.onend=()=>{if(!heard)e.textContent='لم أسمع شيئًا'};
+ try{r.start();setTimeout(()=>{try{r.stop()}catch(x){}},5000)}catch(x){e.textContent='❌ تعذّر البدء'}}
+function swipePage(dx,dy){if(!MP.open||rc||Math.abs(dx)<60||Math.abs(dx)<1.5*Math.abs(dy))return;mushaf(MP.p+(dx>0?1:-1))}
 let sx=0,sy=0;{const sh=$('sheet');if(sh&&sh.addEventListener){sh.addEventListener('touchstart',e=>{const t=e.changedTouches[0];sx=t.clientX;sy=t.clientY},{passive:true});sh.addEventListener('touchend',e=>{const t=e.changedTouches[0];swipePage(t.clientX-sx,t.clientY-sy)},{passive:true})}}
 document.addEventListener('keydown',e=>{if(!MP.open||/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||''))return;if(e.key==='ArrowLeft')mushaf(MP.p+1);if(e.key==='ArrowRight')mushaf(MP.p-1)});
 function hzItems(t){const z=S.hz,U=hzUnits(z.u);return z.off.includes(dow(t))?[...hd].filter(j=>j>=t-7&&j<t).flatMap(j=>hzAt(U,rank(j))):hzAt(U,rank(t))}
@@ -319,6 +390,10 @@ const ACT={close(){MP.open=false;$('sheet').classList.remove('show')},
  share(){sheet(`<h3>🔗 رابط المتابعة (مشاهدة فقط)</h3><input type="text" id="sl" readonly style="width:100%" value="${shareLink()}" onclick="this.select()"><p><small>لولي الأمر أو الشيخ: يرى الخطة والإنجاز ولا يستطيع التعديل. هذه صورة لحالتك الآن، فأعد إرسال الرابط بعد أي تحديث.</small></p><button class="b" data-act="copy">📋 نسخ</button><button class="b g" data-act="wa">واتساب</button>`)},
  copy(){const i=$('sl');i.select();navigator.clipboard?navigator.clipboard.writeText(i.value):document.execCommand('copy')},
  wa(){window.open('https://wa.me/?text='+encodeURIComponent('📖 متابعة مراجعة الحفظ (مشاهدة فقط):\n'+$('sl').value),'_blank')},
+ rm(a){S.rm=a.dataset.v;save();mushaf(MP.p,null,1)},
+ rcagain(){MP.view='read';MP.st=null;$('rcres').innerHTML='';$('mqw').innerHTML=mqHtml();setMic('🎤 سمع')},
+ rcnorm(){if(MP.st){MP.view=MP.view==='review'?'read':'review';$('mqw').innerHTML=mqHtml()}},
+ micchk(){micCheck()},mictest(){micTest()},mp0(){mushaf(MP.p,null,1)},
  notif(){notifSheet()},
  testn(){notify('📖 مراجعة الحفظ','هذا إشعار تجريبي — حان وقت مراجعة اليوم',1)},
  reload(){location.href=location.href.split('#')[0].split('?')[0]+'?v='+Date.now()+location.hash},
@@ -343,7 +418,7 @@ if(typeof navigator!=='undefined'&&'serviceWorker' in navigator&&/^https?:/.test
 setInterval(remCheck,30000);
 document.addEventListener('click',e=>{const d=e.target.closest('.d');if(d)return openDay(+d.dataset.i);const a=e.target.closest('[data-act]');a&&ACT[a.dataset.act]&&ACT[a.dataset.act](a)});
 window.addEventListener('hashchange',()=>location.reload());
-const BUILD='20261014-112930';
+const BUILD='20261016-060040';
 async function chk(){try{if(!/^https?:/.test(location.protocol))return;const r=await fetch(location.href.split('#')[0].split('?')[0]+'?_='+Date.now(),{cache:'no-store',headers:{Range:'bytes=0-2047'}}),m=(await r.text()).match(/name="build" content="([^"]+)"/);if(m&&m[1]!==BUILD)$('upd').classList.add('show')}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){chk();remCheck()}});setInterval(chk,18e5);
 function init(){load();ui();if(!V){if(!S.sd&&!done.size&&!hd.size)S.start=iso(new Date());fix();save()}document.body.classList.toggle('v',V);if(V&&VT)$('vd').textContent='(آخر تحديث: '+new Date(VT).toLocaleString('ar',{dateStyle:'medium',timeStyle:'short'})+')';
