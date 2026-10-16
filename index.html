@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261016-060040"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
+<meta name="theme-color" content="#0f2a4a"><meta name="build" content="20261016-120000"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>مراجعة الحفظ</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--h:#0f2a4a;--c:#fff;--t:#1d2a3a;--n:#0f2a4a;--g:#d4a93c;--bg:#f5f2ea;--ok:#2f9e63;--ms:#d9534f}
@@ -73,7 +73,7 @@ body.dark button.b.l{background:#2c4260;color:#fff}body.dark .d,body.dark .chip,
 .rcb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:8px 0}
 .micb{background:var(--n);color:#fff;border:2px solid var(--g);border-radius:26px;padding:10px 24px;font:700 17px Cairo,sans-serif;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer}.micb.on{background:#d9534f}
 .seg2{display:flex}.seg2 button{border:1px solid var(--n);background:var(--c);color:var(--h);padding:8px 12px;font:13px Cairo,sans-serif;cursor:pointer}.seg2 button:first-child{border-radius:0 18px 18px 0}.seg2 button:last-child{border-radius:18px 0 0 18px}.seg2 button.on{background:var(--n);color:#fff}
-.mq .er{color:#d9534f;font-weight:700}.mq .dt{color:#8a94a0;letter-spacing:3px}
+.mq .er{color:#d9534f;font-weight:700}.mq .un{color:#e08a2e;border-bottom:2px dotted #e08a2e}.mq .dt{color:#8a94a0;letter-spacing:3px}
 .rr{border:2px solid;border-radius:14px;padding:10px;text-align:center;margin:8px 0}.rr .pc{font-size:34px;font-weight:700}
 </style></head><body>
 <header><div class="tb"><button data-act="theme" id="bt" title="ليلي / نهاري">🌙</button><button data-act="mode" id="bm" title="كمبيوتر / هاتف">🖥️</button><button data-act="shareapp" title="مشاركة التطبيق">📤</button><button data-act="notif" title="الإشعارات">🔔</button><button class="pill" data-act="install">📲 تثبيت التطبيق</button></div><h1>📖 مراجعة الحفظ</h1><p>خطة مراجعة على مدار السنة</p></header>
@@ -107,10 +107,10 @@ const same=(a,b)=>{if(a===b)return 1;const L=Math.max(a.length,b.length);return 
 function align(E,R){const n=E.length,m=R.length,I=.3,d=Array.from({length:n+1},()=>new Float64Array(m+1));
  for(let i=1;i<=n;i++)d[i][0]=i;for(let j=1;j<=m;j++)d[0][j]=j*I;
  for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+I,d[i-1][j-1]+(same(E[i-1],R[j-1])?0:1));
- const ok=new Array(n).fill(0);let i=n,j=m;
+ const ok=new Array(n).fill(0),pos=new Array(n).fill(-1);let i=n,j=m;
  while(i>0||j>0){const sm=i>0&&j>0&&same(E[i-1],R[j-1])?1:0;
-  if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(sm?0:1)){ok[i-1]=sm;i--;j--}else if(i>0&&d[i][j]===d[i-1][j]+1)i--;else j--}
- return ok}
+  if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(sm?0:1)){ok[i-1]=sm;i--;j--}else if(i>0&&d[i][j]===d[i-1][j]+1){pos[i-1]=j;i--}else j--}
+ ok.pos=pos;return ok}
 const band=p=>p>=85?['ممتاز','#1e9e5a']:p>=75?['جيد جدًا','#4caf50']:p>=60?['جيد','#c99a2e']:p>=45?['مقبول','#e08a2e']:['يحتاج مراجعة أكثر','#d9534f'];
 function scopeData(){const q0=MP.scope?MP.scope.q:null,a=q0!=null?SS[q0]:D.p[MP.p-1],b=q0!=null?SS[q0]+D.c[q0]-1:pEnd(MP.p),segs=[],E=[];
  for(let i=a;i<=b;i++){const q=bs(SS,i),n=i-SS[q]+1;let g=segs[segs.length-1];if(!g||g.q!==q){g={q,ays:[]};segs.push(g)}
@@ -121,7 +121,7 @@ function mqHtml(){const d=scopeData(),v=MP.view,st=MP.st||[],inH=i=>MP.hl.some(r
   g.ays.forEach((y,ai)=>{const last=ai===g.ays.length-1;
    if(v==='hide'){const k=y.ws.length,vf=ai===0?y.ws[0].w:'',vl=last&&(k>1||ai>0)?y.ws[k-1].w:'',hid=k-(vf?1:0)-(vl?1:0);
     h+=(vf?`<span>${vf}</span> `:'')+(hid>0?'<span class="dt">· · ·</span> ':'')+(vl?`<span>${vl}</span> `:'')}
-   else if(v==='review')h+=y.ws.map(t=>`<span class="${t.k>=0&&st[t.k]===0?'er':''}">${t.w}</span>`).join(' ')+' ';
+   else if(v==='review')h+=y.ws.map(t=>`<span class="${t.k>=0?(st[t.k]===0?'er':st[t.k]===2?'un':''):''}">${t.w}</span>`).join(' ')+' ';
    else h+=`<span class="${inH(y.i)?'hl':''}">${T[y.i-1]}</span> `;
    h+=`<span class="ae">﴿${AR(y.n)}﴾</span> `})});
  return h}
@@ -139,32 +139,62 @@ function mushaf(p,hl,keep){recAbort();MP.p=Math.min(604,Math.max(1,Math.round(p)
  bindMic();MP.open=true;$('sb').parentNode.scrollTop=0}
 function setScope(v){MP.scope=v===''?null:{q:+v};mushaf(MP.p,null,1)}
 // ----- الميكروفون والتعرف على الصوت -----
-let rc=null,fin=[],inter='',holding=false,toggled=false,t0=0,stopping=false,ended=false;
+let rc=null,fin=[],inter='',holding=false,toggled=false,t0=0,stopping=false,ended=false,gaps=[],errs=0,rst=0,wd=0,lastRes=0,silentEnd=false,cutN=0;
+const FATAL={'not-allowed':1,'service-not-allowed':1,'language-not-supported':1};
+const toR=t=>t.split(/\s+/).map(norm).filter(Boolean);
 const SRC=()=>window.SpeechRecognition||window.webkitSpeechRecognition;
-const errMsg=c=>({'not-allowed':'الميكروفون غير مسموح — اسمح للموقع باستخدامه من إعدادات المتصفح','service-not-allowed':'خدمة التعرف على الصوت غير مسموحة في هذا المتصفح','audio-capture':'لا يوجد ميكروفون أو لا يمكن الوصول إليه','network':'لا يوجد اتصال بالإنترنت (التعرف على الصوت يحتاجه)','language-not-supported':'اللغة العربية غير مدعومة في التعرف على الصوت لديك'}[c]||'تعذّر التعرف على الصوت ('+c+')');
+const errMsg=c=>({'not-allowed':'الميكروفون غير مسموح — اسمح للموقع باستخدامه من إعدادات المتصفح','service-not-allowed':'خدمة التعرف على الصوت غير مسموحة في هذا المتصفح','audio-capture':'لا يوجد ميكروفون أو لا يمكن الوصول إليه','network':'تعذّر الاتصال بخدمة التعرف على الصوت — أعد المحاولة','language-not-supported':'اللغة العربية غير مدعومة في التعرف على الصوت لديك'}[c]||'تعذّر التعرف على الصوت ('+c+')');
 function setMic(t,on){const m=$('mic');if(m){m.textContent=t;m.classList.toggle('on',!!on)}}
 function note(m,diag){const e=$('rcres');if(e)e.innerHTML=`<div class="warn">${m}${diag?'<br><button class="b" data-act="micchk">🎤 افحص الميكروفون</button>':''}</div>`}
-function recAbort(){if(rc){stopping=true;ended=true;const r=rc;rc=null;try{r.stop()}catch(e){}}holding=false;toggled=false}
+function recAbort(){clearTimeout(rst);clearTimeout(wd);rst=0;if(rc){stopping=true;ended=true;const r=rc;rc=null;try{r.stop()}catch(e){}}holding=false;toggled=false}
 function bindMic(){const m=$('mic');if(!m)return;m.onpointerdown=micDown;m.onpointerup=micUp;m.onpointercancel=micUp;m.oncontextmenu=e=>e.preventDefault()}
 function micDown(e){e.preventDefault&&e.preventDefault();try{e.target.setPointerCapture(e.pointerId)}catch(x){}
- if(rc&&toggled){recStop();return}if(rc)return;holding=true;toggled=false;t0=Date.now();recStart()}
-function micUp(){if(!holding)return;holding=false;if(!rc)return;if(Date.now()-t0<350){toggled=true;setMic('🔴 اضغط للإيقاف',1)}else recStop()}
+ if((rc||rst)&&toggled){recStop();return}if(rc||rst)return;holding=true;toggled=false;t0=Date.now();recStart()}
+function micUp(){if(!holding)return;holding=false;if(!rc&&!rst)return;if(Date.now()-t0<350){toggled=true;setMic('🔴 اضغط للإيقاف',1)}else recStop()}
 function recStart(){const R=SRC();if(!R){holding=false;note('المتصفح لا يدعم التعرف على الصوت. افتح التطبيق في كروم أو إيدج أو سفاري.',1);return}
- fin=[];inter='';stopping=false;ended=false;MP.view=S.rm==='show'?'read':'hide';MP.st=null;$('rcres').innerHTML='';$('mqw').innerHTML=mqHtml();
- const go=()=>{const r=new R();rc=r;r.lang='ar-SA';r.continuous=true;r.interimResults=true;
-  r.onresult=e=>{inter='';for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];x.isFinal?fin.push(x[0].transcript):inter+=x[0].transcript}};
-  r.onerror=e=>{if(e.error==='no-speech'||e.error==='aborted')return;stopping=true;recFail(errMsg(e.error))};
-  r.onend=()=>{if(rc!==r)return;if(!stopping&&(holding||toggled)){try{go()}catch(x){recFinish()}}else recFinish()};
-  try{r.start()}catch(x){rc=null;recFail('تعذّر بدء الاستماع — جرّب مرة أخرى')}};
- go();if(rc)setMic('🔴 أفلت للإيقاف',1)}
-function recStop(){stopping=true;toggled=false;holding=false;setMic('⏳ جارٍ التقدير…');try{rc&&rc.stop()}catch(x){recFinish()}}
-function recFail(m){rc=null;holding=false;toggled=false;ended=true;MP.view='read';$('mqw').innerHTML=mqHtml();setMic('🎤 سمع');note('❌ '+m,1)}
-function recFinish(){if(ended)return;ended=true;rc=null;setMic('🎤 سمع');evalRec(fin.join(' ')+' '+inter)}
-function evalRec(txt){const E=scopeData().E,R=txt.split(/\s+/).map(norm).filter(Boolean);
+ fin=[];inter='';stopping=false;ended=false;gaps=[];errs=0;cutN=0;rst=0;silentEnd=false;MP.view=S.rm==='show'?'read':'hide';MP.st=null;$('rcres').innerHTML='';$('mqw').innerHTML=mqHtml();
+ const commit=()=>{if(inter.trim()){fin.push(inter);inter=''}};
+ const live=()=>!stopping&&(holding||toggled);
+ const go=()=>{rst=0;if(!live()){recFinish();return}
+  const r=new R();rc=r;r.lang='ar-SA';r.continuous=true;r.interimResults=true;lastRes=Date.now();silentEnd=false;
+  const opened=()=>{const g=gaps[gaps.length-1];if(g&&!g.to)g.to=Date.now()};
+  r.onaudiostart=opened;r.onstart=opened;
+  r.onresult=e=>{errs=0;lastRes=Date.now();inter='';for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];x.isFinal?fin.push(x[0].transcript):inter+=x[0].transcript}};
+  r.onerror=e=>{if(rc!==r)return;const c=e.error;
+   if(c==='aborted')return;
+   if(c==='no-speech'){silentEnd=true;return}
+   if(FATAL[c]){stopping=true;commit();if(toR(fin.join(' ')).length){gaps.push({pos:toR(fin.join(' ')).length,from:Date.now(),to:0,inf:1});cutN++;recFinish(errMsg(c))}else recFail(errMsg(c));return}
+   errs++};
+  r.onend=()=>{if(rc!==r)return;commit();
+   if(!live()){recFinish();return}
+   const from=silentEnd?Date.now():lastRes;gaps.push({pos:toR(fin.join(' ')).length,from,to:0});cutN++;
+   if(errs>=5){stopping=true;if(toR(fin.join(' ')).length){gaps[gaps.length-1].inf=1;recFinish('انقطعت خدمة التعرف على الصوت')}else recFail(errMsg('network'));return}
+   rc=null;const wait=errs?Math.min(250*errs,1200):0;
+   const again=()=>{try{go()}catch(x){if(live()&&++errs<5)rst=setTimeout(again,300);else{stopping=true;recFinish()}}};
+   if(wait)rst=setTimeout(again,wait);else again()};
+  try{r.start()}catch(x){rc=null;if(live()&&++errs<5){rst=setTimeout(go,300)}else recFail('تعذّر بدء الاستماع — جرّب مرة أخرى')}};
+ go();if(rc||rst)setMic('🔴 أفلت للإيقاف',1)}
+function recStop(){stopping=true;toggled=false;holding=false;setMic('⏳ جارٍ التقدير…');
+ if(rst){clearTimeout(rst);rst=0;const g=gaps[gaps.length-1];if(g&&!g.to)g.to=Date.now();recFinish();return}
+ clearTimeout(wd);wd=setTimeout(()=>{if(!ended)recFinish()},3000);
+ try{rc&&rc.stop()}catch(x){recFinish()}}
+function recFail(m){clearTimeout(rst);clearTimeout(wd);rst=0;rc=null;holding=false;toggled=false;ended=true;MP.view='read';$('mqw').innerHTML=mqHtml();setMic('🎤 سمع');note('❌ '+m,1)}
+function recFinish(why){if(ended)return;ended=true;clearTimeout(rst);clearTimeout(wd);rst=0;holding=false;toggled=false;rc=null;setMic('🎤 سمع');
+ if(inter.trim()){fin.push(inter);inter=''}
+ const g=gaps[gaps.length-1];if(g&&!g.to)g.to=Date.now();
+ evalRec(fin.join(' '),why)}
+function evalRec(txt,why){const E=scopeData().E,R=toR(txt);
  if(!R.length){MP.view='read';$('mqw').innerHTML=mqHtml();return note('لم أسمع شيئًا. تأكد أن الميكروفون يعمل وتكلّم قريبًا منه.',1)}
- const ok=align(E,R),good=ok.reduce((x,y)=>x+y,0),p=Math.round(100*good/E.length),bd=band(p);
- MP.st=ok;MP.view='review';MP.score=p;$('mqw').innerHTML=mqHtml();
- $('rcres').innerHTML=`<div class="rr" style="border-color:${bd[1]}"><div class="pc" style="color:${bd[1]}">${AR(p)}٪</div><b style="color:${bd[1]}">${bd[0]}</b><div>صحيحة ${AR(good)} من ${AR(E.length)} كلمة · أخطاء ${AR(E.length-good)}</div><small>تقدير تقريبي على الحروف والكلمات فقط، ولا يحكم على التشكيل ولا التجويد. الأحمر: كلمات لم تُقرأ أو اختلفت.</small><br><button class="b g" data-act="rcagain">🔁 أعد التسميع</button><button class="b l" data-act="rcnorm">عرض/إخفاء الأخطاء</button></div>`}
+ const ok=align(E,R),pos=ok.pos||[],left={};
+ // الكلمات التي ضاعت أثناء انقطاع المايك لا تُحسب أخطاءً: تُمنح لكل فجوة بقدر زمنها
+ gaps.forEach(g=>{const n=g.inf?1e9:Math.ceil(Math.max(0,(g.to||Date.now())-g.from)/1000*3.5)+1;left[g.pos]=(left[g.pos]||0)+n});
+ let unc=0;for(let i=0;i<E.length;i++){if(ok[i]===0&&pos[i]>=0&&left[pos[i]]>0){left[pos[i]]--;ok[i]=2;unc++}}
+ const good=ok.reduce((x,y)=>x+(y===1?1:0),0),den=E.length-unc,bad=den-good;
+ MP.st=ok;MP.view='review';MP.score=den>0?Math.round(100*good/den):0;$('mqw').innerHTML=mqHtml();
+ if(den<=0||unc>E.length*.3){const m=(why?why+' — ':'')+'انقطع التعرف على الصوت وضاع جزء كبير من التسميع، فالنتيجة غير دقيقة. أعد التسميع.';
+  $('rcres').innerHTML=`<div class="warn">⚠️ ${m}${unc?'<br><small>الكلمات البرتقالية لم تُحتسب.</small>':''}<br><button class="b g" data-act="rcagain">🔁 أعد التسميع</button><button class="b l" data-act="rcnorm">عرض/إخفاء الأخطاء</button>${den>0?`<br><b>النتيجة على ما سُمع: ${AR(MP.score)}٪</b>`:''}</div>`;return}
+ const p=MP.score,bd=band(p);
+ $('rcres').innerHTML=`<div class="rr" style="border-color:${bd[1]}"><div class="pc" style="color:${bd[1]}">${AR(p)}٪</div><b style="color:${bd[1]}">${bd[0]}</b><div>صحيحة ${AR(good)} من ${AR(den)} كلمة · أخطاء ${AR(bad)}</div>${unc?`<div class="meta">🟠 ${AR(unc)} كلمة لم تُحتسب لأن الاتصال انقطع لحظة نطقها (انقطع ${AR(cutN)} ${cutN>10?'مرة':'مرات'})</div>`:''}<small>تقدير تقريبي على الحروف والكلمات فقط، ولا يحكم على التشكيل ولا التجويد. الأحمر: كلمات لم تُقرأ أو اختلفت.</small><br><button class="b g" data-act="rcagain">🔁 أعد التسميع</button><button class="b l" data-act="rcnorm">عرض/إخفاء الأخطاء</button></div>`}
 async function micCheck(){recAbort();const L=[],ok=(c,t,f)=>L.push(c?'✅ '+t:'❌ '+t+' — <b>'+f+'</b>'),ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua),sa=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
  ok(!!SRC(),'المتصفح يدعم التعرف على الصوت','استخدم كروم أو إيدج أو سفاري (فايرفوكس لا يدعمه)');
  ok(/^https:|^http:\/\/localhost/.test(location.href),'الرابط آمن (https)','الميكروفون لا يعمل إلا على رابط https');
@@ -418,7 +448,7 @@ if(typeof navigator!=='undefined'&&'serviceWorker' in navigator&&/^https?:/.test
 setInterval(remCheck,30000);
 document.addEventListener('click',e=>{const d=e.target.closest('.d');if(d)return openDay(+d.dataset.i);const a=e.target.closest('[data-act]');a&&ACT[a.dataset.act]&&ACT[a.dataset.act](a)});
 window.addEventListener('hashchange',()=>location.reload());
-const BUILD='20261016-060040';
+const BUILD='20261016-120000';
 async function chk(){try{if(!/^https?:/.test(location.protocol))return;const r=await fetch(location.href.split('#')[0].split('?')[0]+'?_='+Date.now(),{cache:'no-store',headers:{Range:'bytes=0-2047'}}),m=(await r.text()).match(/name="build" content="([^"]+)"/);if(m&&m[1]!==BUILD)$('upd').classList.add('show')}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){chk();remCheck()}});setInterval(chk,18e5);
 function init(){load();ui();if(!V){if(!S.sd&&!done.size&&!hd.size)S.start=iso(new Date());fix();save()}document.body.classList.toggle('v',V);if(V&&VT)$('vd').textContent='(آخر تحديث: '+new Date(VT).toLocaleString('ar',{dateStyle:'medium',timeStyle:'short'})+')';
